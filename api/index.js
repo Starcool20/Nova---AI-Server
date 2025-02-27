@@ -7,11 +7,37 @@ const OpenAI = require("openai");
 const { Readable } = require('stream');
 const bodyParser = require('body-parser');
 const FormData = require('form-data');
+import { getApp } from "firebase/app";
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const app = express();
 const ffmpegPath = path.join(__dirname, 'bin', 'ffmpeg');
 ffmpeg.setFfmpegPath(ffmpegPath);
 const upload = multer({ dest: '/tmp' });
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCSgXwfQApXMdQUU6hG7ff0xgTNeTcKBZk",
+  authDomain: "card-delivery.firebaseapp.com",
+  databaseURL: "https://card-delivery-default-rtdb.firebaseio.com",
+  projectId: "card-delivery",
+  storageBucket: "card-delivery.appspot.com",
+  messagingSenderId: "738527725245",
+  appId: "1:738527725245:web:0a00514f524187012399d4",
+  measurementId: "G-DN83LYFK4Q"
+};
+
+// Initialize Firebase
+const firebase = initializeApp(firebaseConfig);
+const analytics = getAnalytics(firebase);
+const storage = getStorage();
+
+// Create a storage reference from our storage service
+const storageRef = ref(storage);
+
 
 // Middleware to parse JSON
 app.use(bodyParser.json());
@@ -256,6 +282,11 @@ async function getGPTResponse(audioData, res, data_json, transcription, filePath
       res.status(200).send(text);
       return;
     }
+
+    // Base64 formatted string
+   uploadString(storageRef, response.choices[0].message.audio.data, 'base64').then((snapshot) => {
+   console.log('Uploaded a base64 string!');
+});
 
     const audioFilePath = path.join('/tmp', 'output_audio.mp3');
 

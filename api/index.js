@@ -351,7 +351,7 @@ app.post('/prompt-nova', upload.single('audio'), async (req, res) => {
     const ttsBuffer = await getTTSStream(gptResponse);
 
     // Define file path
-    const filePath = path.join(__dirname, "output.mp3");
+    const filePath = path.join("/tmp", "output.mp3");
 
     // Write buffer to file
     fs.writeFileSync(filePath, ttsBuffer);

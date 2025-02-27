@@ -337,7 +337,7 @@ app.post('/prompt-nova', upload.single('audio'), async (req, res) => {
 
 
     // Step 2: Generate response using GPT based on the transcription
-    const gptResponse = await getGPTResponse(metadataJson, transcription, newFilePath);
+    const gptResponse = await getGPTResponse(metadataJson, transcription);
 
     console.log('GPT Response:', gptResponse);
 
@@ -377,5 +377,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
-console.log(transcription);
+
 module.exports = allowCors(handler);

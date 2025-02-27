@@ -284,24 +284,30 @@ function getTranscription(file) {
   });
 }
 
-function getTTSStream(text) {
-  return new Promise(async (resolve, reject) => {
-    try {
+async function getTTSStream(text) {
+  try {
+    // Request TTS audio from OpenAI
+    const mp3 = await openai.audio.speech.create({
+      model: "tts-1",
+      voice: "nova",
+      input: text,
+    });
 
-      const mp3 = await openai.audio.speech.create({
-        model: "tts-1",
-        voice: "nova",
-        input: text,
-      });
+    // Convert response to a buffer
+    const arrayBuffer = await mp3.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
 
-      const buffer = Buffer.from(await mp3.arrayBuffer());
-      resolve(buffer);
-    } catch (e) {
-      console.error('Error streaming text to speech:', e);
-      reject(e);
+    if (!buffer || buffer.length === 0) {
+      throw new Error("Empty TTS response received.");
     }
-  });
+
+    return buffer;
+  } catch (error) {
+    console.error("Error generating TTS audio:", error);
+    throw error; // Properly propagate the error
+  }
 }
+
 
 app.get('/', (req, res) => {
   res.status(200).send('Hello, world!');
@@ -344,9 +350,15 @@ app.post('/prompt-nova', upload.single('audio'), async (req, res) => {
     // Step 3: Stream the GPT response as TTS audio
     const ttsBuffer = await getTTSStream(gptResponse);
 
+    // Set headers for streaming MP3 response
+    res.writeHead(200, {
+      "Content-Type": "audio/mpeg",
+      "Content-Length": Buffer.byteLength(ttsBuffer),
+    });
+
     // Step 4: Send the TTS audio as a response
     res.write(ttsBuffer);
-    res.end(ttsBuffer);
+    res.end();
 
     // Cleanup: Delete the audio file after processing
     fs.unlink(outputPath, (err) => {

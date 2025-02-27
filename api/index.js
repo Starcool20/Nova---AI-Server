@@ -41,10 +41,15 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-function convertAudio(inputPath, outputPath, format) {
+const ffmpeg = require('fluent-ffmpeg');
+
+function convertAudio(inputPath, outputPath) {
   return new Promise((resolve, reject) => {
     ffmpeg(inputPath)
-      .toFormat(format) // 'mp3' or 'wav'
+      .audioCodec('pcm_s16le') // 16-bit little-endian PCM
+      .audioChannels(1) // OpenAI TTS streaming may require mono audio
+      .audioFrequency(16000) // 16 kHz is a common requirement
+      .format('s16le') // Raw PCM format
       .on('error', (err) => {
         console.error('Error during conversion:', err.message);
         reject(err);
@@ -57,13 +62,14 @@ function convertAudio(inputPath, outputPath, format) {
   });
 }
 
+
 // Function to get GPT-generated response based on transcription
 async function getGPTResponse(audioData, res, data_json, transcription, filePath) {
   try {
     const response = await openai.chat.completions.create({
       model: 'gpt-4o-audio-preview',
       modalities: ["text", "audio"],
-      audio: { voice: "alloy", format: "mp3" },
+      audio: { voice: "alloy", format: "pcm16" },
       messages: [
         {
           role: "user",
@@ -344,7 +350,7 @@ app.post('/prompt-nova', upload.single('audio'), async (req, res) => {
 
     const outputPath = path.join('/tmp', 'nova.mp4');
 
-    const newFilePath = path.join('/tmp', 'nova.mp3');
+    const newFilePath = path.join('/tmp', 'nova.pcm');
 
     fs.rename(originalFilePath, outputPath, (err) => {
       if (err) {
@@ -358,7 +364,7 @@ app.post('/prompt-nova', upload.single('audio'), async (req, res) => {
 
     console.log(transcription);
 
-    await convertAudio(outputPath, newFilePath, 'mp3');
+    await convertAudio(outputPath, newFilePath);
 
     const dataAudio = audioFileToBase64(newFilePath);
 

@@ -350,34 +350,17 @@ app.post('/prompt-nova', upload.single('audio'), async (req, res) => {
     // Step 3: Stream the GPT response as TTS audio
     const ttsBuffer = await getTTSStream(gptResponse);
 
-    // Define file path
-    const filePath = path.join("/tmp", "output.mp3");
-
-    // Write buffer to file
-    fs.writeFileSync(filePath, ttsBuffer);
-
-    // Step 3: Write Metadata as First Line
+    // Step 2: Create Metadata JSON
     const metadata2 = JSON.stringify({ transcript: transcription, response: "Success" }) + "\n";
-    res.write(metadata2); // First thing in the response
+    const metadataBuffer = Buffer.from(metadata2, "utf-8");
 
-    // Step 4: Stream MP3 Audio After Metadata
-    const audioStream = fs.createReadStream(audioFilePath);
-    audioStream.pipe(res);
+    // Step 3: Combine Metadata and MP3 Audio in One Response
+    const finalBuffer = Buffer.concat([metadataBuffer, ttsBuffer]);
 
-    // Step 5: Cleanup After Streaming Ends
-    audioStream.on("end", () => {
-      fs.unlink(audioFilePath, (err) => {
-        if (err) console.error("Failed to delete temp file:", err);
-      });
-    });
-
-    // Handle Streaming Errors Gracefully
-    audioStream.on("error", (err) => {
-      console.error("Stream error:", err);
-      if (!res.headersSent) {
-        res.end(); // Ensure response is closed properly
-      }
-    });
+    // Step 4: Send Response as a Single Buffer
+    res.setHeader("Content-Type", "application/octet-stream");
+    res.setHeader("Content-Disposition", 'attachment; filename="speech.mp3"');
+    res.send(finalBuffer);
     
     // Cleanup: Delete the audio file after processing
     fs.unlink(outputPath, (err) => {

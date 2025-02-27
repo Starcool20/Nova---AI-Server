@@ -325,6 +325,10 @@ function getTranscription(file) {
   });
 }
 
+app.get('/', (req, res) => {
+  res.status(200).send('Hello, world!');
+});
+
 // Main endpoint to handle audio upload, transcription, GPT response, and TTS streaming
 app.post('/prompt-nova', upload.single('audio'), async (req, res) => {
   try {

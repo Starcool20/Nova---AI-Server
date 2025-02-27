@@ -350,16 +350,25 @@ app.post('/prompt-nova', upload.single('audio'), async (req, res) => {
     // Step 3: Stream the GPT response as TTS audio
     const ttsBuffer = await getTTSStream(gptResponse);
 
-    // Set headers for streaming MP3 response
-    res.writeHead(200, {
-      "Content-Type": "audio/mpeg",
-      "Content-Length": Buffer.byteLength(ttsBuffer),
+    // Define file path
+    const filePath = path.join(__dirname, "output.mp3");
+
+    // Write buffer to file
+    fs.writeFileSync(filePath, ttsBuffer);
+
+    // Send the file as a response
+    res.download(filePath, "speech.mp3", (err) => {
+      if (err) {
+        console.error("Error sending file:", err);
+        res.status(500).json({ error: "Failed to send audio file" });
+      }
+
+      // Optional: Delete the file after sending
+      fs.unlink(filePath, (unlinkErr) => {
+        if (unlinkErr) console.error("Error deleting file:", unlinkErr);
+      });
     });
-
-    // Step 4: Send the TTS audio as a response
-    res.write(ttsBuffer);
-    res.end();
-
+    
     // Cleanup: Delete the audio file after processing
     fs.unlink(outputPath, (err) => {
       if (err) console.error('Failed to delete file:', err);

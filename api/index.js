@@ -41,13 +41,9 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-function convertAudio(inputPath, outputPath) {
+function convertAudio(inputPath, outputPath, format = 'pcm16') {
   return new Promise((resolve, reject) => {
-    ffmpeg(inputPath)
-      .audioCodec('pcm_s16le') // 16-bit little-endian PCM
-      .audioChannels(1) // OpenAI TTS streaming may require mono audio
-      .audioFrequency(16000) // 16 kHz is a common requirement
-      .format('s16le') // Raw PCM format
+    let command = ffmpeg(inputPath)
       .on('error', (err) => {
         console.error('Error during conversion:', err.message);
         reject(err);
@@ -55,8 +51,18 @@ function convertAudio(inputPath, outputPath) {
       .on('end', () => {
         console.log('Conversion finished:', outputPath);
         resolve(outputPath);
-      })
-      .save(outputPath);
+      });
+
+    if (format === 'pcm16') {
+      command
+        .audioCodec('pcm_s16le') // PCM 16-bit little endian
+        .format('s16le') // Use WAV container (or 's16le' for raw PCM)
+        .save(outputPath);
+    } else {
+      command
+        .toFormat(format)
+        .save(outputPath);
+    }
   });
 }
 

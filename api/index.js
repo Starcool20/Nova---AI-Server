@@ -356,23 +356,28 @@ app.post('/prompt-nova', upload.single('audio'), async (req, res) => {
     // Write buffer to file
     fs.writeFileSync(filePath, ttsBuffer);
 
-    // Step 3: Send Metadata + Stream Audio
-    res.writeHead(200, {
-      "Content-Type": "application/octet-stream",
-      "Transfer-Encoding": "chunked",
-    });
+    // Step 3: Write Metadata as First Line
+    const metadata2 = JSON.stringify({ transcript: transcription, response: "Success" }) + "\n";
+    res.write(metadata2); // First thing in the response
 
-    // Write metadata as the first line
-    const metadata2 = JSON.stringify({ transcript: text, response: "Success" }) + "\n";
-    res.write(metadata2);
-
-    // Stream the audio file after metadata
-    const audioStream = fs.createReadStream(filePath);
+    // Step 4: Stream MP3 Audio After Metadata
+    const audioStream = fs.createReadStream(audioFilePath);
     audioStream.pipe(res);
 
-    // Cleanup: Delete the temp file after sending
-    audioStream.on("end", () => fs.unlinkSync(audioFilePath));
+    // Step 5: Cleanup After Streaming Ends
+    audioStream.on("end", () => {
+      fs.unlink(audioFilePath, (err) => {
+        if (err) console.error("Failed to delete temp file:", err);
+      });
+    });
 
+    // Handle Streaming Errors Gracefully
+    audioStream.on("error", (err) => {
+      console.error("Stream error:", err);
+      if (!res.headersSent) {
+        res.end(); // Ensure response is closed properly
+      }
+    });
     
     // Cleanup: Delete the audio file after processing
     fs.unlink(outputPath, (err) => {

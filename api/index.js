@@ -11,7 +11,7 @@ import { getApp } from "firebase/app";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 const app = express();
 const ffmpegPath = path.join(__dirname, 'bin', 'ffmpeg');
@@ -34,9 +34,6 @@ const firebaseConfig = {
 const firebase = initializeApp(firebaseConfig);
 const analytics = getAnalytics(firebase);
 const storage = getStorage();
-
-// Create a storage reference from our storage service
-const storageRef = ref(storage);
 
 
 // Middleware to parse JSON
@@ -283,15 +280,25 @@ async function getGPTResponse(audioData, res, data_json, transcription, filePath
       return;
     }
 
-    // Base64 formatted string
-   uploadString(storageRef, response.choices[0].message.audio.data, 'base64').then((snapshot) => {
-   console.log('Uploaded a base64 string!');
-});
-
     const audioFilePath = path.join('/tmp', 'output_audio.mp3');
 
     fs.writeFileSync(audioFilePath, Buffer.from(response.choices[0].message.audio.data, 'base64')); // Save the audio file
     console.log('Audio file saved:', audioFilePath);
+
+     // Read the file from local disk
+     const fileBuffer = fs.readFileSync(audioFilePath);
+
+     // Create a reference to Firebase Storage
+     const storageRef = ref(storage, "uploads/audio.mp3");
+
+     const metadata2 = {
+      contentType: 'audio/mpeg',
+    };
+ 
+     // Upload file
+     const snapshot = await uploadBytes(storageRef, fileBuffer, metadata2);
+     console.log("File uploaded successfully!");
+ 
 
     const metadata = {
       transcript: transcription, // Replace with actual transcription

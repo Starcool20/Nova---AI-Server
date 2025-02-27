@@ -41,7 +41,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-convertAudio(inputPath, outputPath, format = 'mp3') { 
+async function convertAudio(inputPath, outputPath, format = 'mp3') { 
   return new Promise((resolve, reject) => {
     ffmpeg(inputPath)
       .toFormat(format) // 'mp3' or 'wav'

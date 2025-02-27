@@ -224,7 +224,8 @@ async function getGPTResponse(data_json, transcription) {
               type: "text",
               text: data_json.user9_response
         }
-      ],
+      ]
+    },
       {
         role: "user",
         content: [

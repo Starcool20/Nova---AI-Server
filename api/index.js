@@ -7,6 +7,7 @@ const OpenAI = require("openai");
 const { Readable } = require('stream');
 const bodyParser = require('body-parser');
 const FormData = require('form-data');
+const { stream } = require('undici-types');
 
 const app = express();
 const ffmpegPath = path.join(__dirname, 'bin', 'ffmpeg');
@@ -245,6 +246,7 @@ async function getGPTResponse(audioData, res, data_json, transcription, filePath
       frequency_penalty: 0.8,
       presence_penalty: 0.7,
       temperature: 0.9,
+      stream: true,
       max_completion_tokens: 1024,
     });
 

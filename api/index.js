@@ -7,33 +7,11 @@ const OpenAI = require("openai");
 const { Readable } = require('stream');
 const bodyParser = require('body-parser');
 const FormData = require('form-data');
-import { getApp } from "firebase/app";
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 const app = express();
 const ffmpegPath = path.join(__dirname, 'bin', 'ffmpeg');
 ffmpeg.setFfmpegPath(ffmpegPath);
 const upload = multer({ dest: '/tmp' });
-
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCSgXwfQApXMdQUU6hG7ff0xgTNeTcKBZk",
-  authDomain: "card-delivery.firebaseapp.com",
-  databaseURL: "https://card-delivery-default-rtdb.firebaseio.com",
-  projectId: "card-delivery",
-  storageBucket: "card-delivery.appspot.com",
-  messagingSenderId: "738527725245",
-  appId: "1:738527725245:web:0a00514f524187012399d4",
-  measurementId: "G-DN83LYFK4Q"
-};
-
-// Initialize Firebase
-const firebase = initializeApp(firebaseConfig);
-const storage = getStorage();
-
 
 // Middleware to parse JSON
 app.use(bodyParser.json());
@@ -80,12 +58,11 @@ async function convertAudio(inputPath, outputPath, format = 'mp3') {
 }
 
 // Function to get GPT-generated response based on transcription
-async function getGPTResponse(audioData, res, data_json, transcription, filePath) {
+async function getGPTResponse(data_json, transcription) {
+  return new Promise(async (resolve, reject) => {
   try {
     const response = await openai.chat.completions.create({
-      model: 'gpt-4o-audio-preview',
-      modalities: ["text", "audio"],
-      audio: { voice: "alloy", format: "mp3" },
+      model: 'gpt-4o-mini',
       messages: [
         {
           role: "user",
@@ -248,19 +225,20 @@ async function getGPTResponse(audioData, res, data_json, transcription, filePath
               text: data_json.user9_response
         }
       ],
-          role: "user",
+      {
+        role: "user",
+        content: [
+          {
+            type: "text",
+            text: transcription
+      }
+    ],
+          role: "developer",
           content: [
             {
               type: "text",
-              text: "You are an assistant named Nova, respond as an assistant according to the recording and make it to be 1 minutes max as output. Also Respond with a witty and humorous tone or Make this reply light-hearted and funny."
+              text: "You are an assistant named Nova, respond as an assistant according to the recording and respond to the last messages others are just histories. Also Respond with a witty and humorous tone or Make this reply light-hearted and funny."
             },
-            {
-              type: "input_audio",
-              input_audio: {
-                data: audioData,
-                format: "mp3"
-              }
-            }
           ]
         }
     ],
@@ -270,73 +248,16 @@ async function getGPTResponse(audioData, res, data_json, transcription, filePath
       max_completion_tokens: 1024,
     });
 
-    const text = response.choices[0].message.audio.transcript;
-    console.log(text);
+    const text = response.choices[0].message.content;
+    console.log('success');
 
-    if (text.toLowerCase() === 'no speech' || text.toLowerCase() === 'no speech.') {
-      res.setHeader('Content-Type', 'text/plain');
-      res.status(200).send(text);
-      return;
-    }
-
-    const audioFilePath = path.join('/tmp', 'output_audio.mp3');
-
-    fs.writeFileSync(audioFilePath, Buffer.from(response.choices[0].message.audio.data, 'base64')); // Save the audio file
-    console.log('Audio file saved:', audioFilePath);
-
-     // Read the file from local disk
-     const fileBuffer = fs.readFileSync(audioFilePath);
-
-     // Create a reference to Firebase Storage
-     const storageRef = ref(storage, "uploads/audio.mp3");
-
-     const metadata2 = {
-      contentType: 'audio/mpeg',
-    };
- 
-     // Upload file
-     const snapshot = await uploadBytes(storageRef, fileBuffer, metadata2);
-     console.log("File uploaded successfully!");
- 
-
-    const metadata = {
-      transcript: transcription, // Replace with actual transcription
-      response: text, // Replace with actual response text
-    };
-
-    // Step 3: Set Headers
-    res.setHeader('Content-Type', 'application/octet-stream');
-    res.setHeader('Transfer-Encoding', 'chunked');
-
-    // Step 4: Send Metadata
-    res.write(JSON.stringify(metadata) + '\n'); // Send metadata as JSON followed by a newline
-
-    // Step 5: Send Audio Data at Once
-    fs.readFile(audioFilePath, (err, audioData) => {
-      if (err) {
-        console.error('Error reading audio file:', err);
-        res.status(500).json({ error: 'Failed to read audio file' });
-        return;
-      }
-
-      // Send the audio data
-      res.write(audioData);
-      res.end();
-
-      // Cleanup: Delete the audio file after sending
-      fs.unlink(audioFilePath, (unlinkErr) => {
-        if (unlinkErr) {
-          console.error('Failed to delete file:', unlinkErr);
-        } else {
-          console.log('Temporary audio file deleted successfully');
-        }
-      });
-    });
+    resolve(text);
   }
   catch (e) {
     console.error('Error streaming text to speech:', e);
-    res.status(500).send('Internal Server Error');
+    reject(e);
   }
+});
 }
 
 function audioFileToBase64(filePath) {
@@ -362,6 +283,25 @@ function getTranscription(file) {
   });
 }
 
+function getTTSStream(text) {
+  return new Promise(async (resolve, reject) => {
+    try {
+
+      const mp3 = await openai.audio.speech.create({
+        model: "tts-1",
+        voice: "nova",
+        input: text,
+      });
+
+      const buffer = Buffer.from(await mp3.arrayBuffer());
+      resolve(buffer);
+    } catch (e) {
+      console.error('Error streaming text to speech:', e);
+      reject(e);
+    }
+  });
+}
+
 app.get('/', (req, res) => {
   res.status(200).send('Hello, world!');
 });
@@ -384,8 +324,6 @@ app.post('/prompt-nova', upload.single('audio'), async (req, res) => {
 
     const outputPath = path.join('/tmp', 'nova.mp4');
 
-    const newFilePath = path.join('/tmp', 'nova.pcm');
-
     fs.rename(originalFilePath, outputPath, (err) => {
       if (err) {
         console.error('Error writing to file:', err);
@@ -396,14 +334,22 @@ app.post('/prompt-nova', upload.single('audio'), async (req, res) => {
 
     const transcription = await getTranscription(outputPath);
 
-    console.log(transcription);
-
-    await convertAudio(outputPath, newFilePath);
-
-    const dataAudio = audioFileToBase64(newFilePath);
 
     // Step 2: Generate response using GPT based on the transcription
-    const gptResponse = await getGPTResponse(dataAudio, res, metadataJson, transcription, newFilePath);
+    const gptResponse = await getGPTResponse(metadataJson, transcription, newFilePath);
+
+    console.log('GPT Response:', gptResponse);
+
+    // Step 3: Stream the GPT response as TTS audio
+    const ttsBuffer = await getTTSStream(gptResponse);
+
+    // Step 4: Send the TTS audio as a response
+    res.writeHead(200, {
+      "Content-Type": "audio/mpeg",
+      "Content-Length": Buffer.byteLength(ttsBuffer),
+    });
+    
+    res.end(ttsBuffer);
 
     // Cleanup: Delete the audio file after processing
     fs.unlink(newFilePath, (err) => {
@@ -430,5 +376,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
-
+console.log(transcription);
 module.exports = allowCors(handler);

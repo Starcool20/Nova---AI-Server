@@ -41,9 +41,10 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-function convertAudio(inputPath, outputPath, format = 'pcm16') {
+convertAudio(inputPath, outputPath, format = 'mp3') { 
   return new Promise((resolve, reject) => {
-    let command = ffmpeg(inputPath)
+    ffmpeg(inputPath)
+      .toFormat(format) // 'mp3' or 'wav'
       .on('error', (err) => {
         console.error('Error during conversion:', err.message);
         reject(err);
@@ -51,21 +52,10 @@ function convertAudio(inputPath, outputPath, format = 'pcm16') {
       .on('end', () => {
         console.log('Conversion finished:', outputPath);
         resolve(outputPath);
-      });
-
-    if (format === 'pcm16') {
-      command
-        .audioCodec('pcm_s16le') // PCM 16-bit little endian
-        .format('s16le') // Use WAV container (or 's16le' for raw PCM)
-        .save(outputPath);
-    } else {
-      command
-        .toFormat(format)
-        .save(outputPath);
-    }
+      })
+      .save(outputPath);
   });
 }
-
 
 // Function to get GPT-generated response based on transcription
 async function getGPTResponse(audioData, res, data_json, transcription, filePath) {
@@ -73,7 +63,7 @@ async function getGPTResponse(audioData, res, data_json, transcription, filePath
     const response = await openai.chat.completions.create({
       model: 'gpt-4o-audio-preview',
       modalities: ["text", "audio"],
-      audio: { voice: "alloy", format: "pcm16" },
+      audio: { voice: "alloy", format: "mp3" },
       messages: [
         {
           role: "user",
@@ -240,7 +230,7 @@ async function getGPTResponse(audioData, res, data_json, transcription, filePath
           content: [
             {
               type: "text",
-              text: "You are an assistant named Nova, respond as an assistant according to the recording or Output:- no speech. if there isn't no human voice. Also Respond with a witty and humorous tone or Make this reply light-hearted and funny."
+              text: "You are an assistant named Nova, respond as an assistant according to the recording and make it to be 1 minutes max as output. Also Respond with a witty and humorous tone or Make this reply light-hearted and funny."
             },
             {
               type: "input_audio",
@@ -255,7 +245,6 @@ async function getGPTResponse(audioData, res, data_json, transcription, filePath
       frequency_penalty: 0.8,
       presence_penalty: 0.7,
       temperature: 0.9,
-      stream: true,
       max_completion_tokens: 1024,
     });
 

@@ -95,7 +95,7 @@
     "tr46": "^0.0.3",
     "type-is": "^1.6.18",
     "typedarray": "^0.0.6",
-    "undici-types": "^5.26.5",
+    "undici-types": "^5.28.4",
     "unpipe": "^1.0.0",
     "util-deprecate": "^1.0.2",
     "utils-merge": "^1.0.1",

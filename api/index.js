@@ -345,15 +345,11 @@ app.post('/prompt-nova', upload.single('audio'), async (req, res) => {
     const ttsBuffer = await getTTSStream(gptResponse);
 
     // Step 4: Send the TTS audio as a response
-    res.writeHead(200, {
-      "Content-Type": "audio/mpeg",
-      "Content-Length": Buffer.byteLength(ttsBuffer),
-    });
-    
+    res.write(ttsBuffer);
     res.end(ttsBuffer);
 
     // Cleanup: Delete the audio file after processing
-    fs.unlink(newFilePath, (err) => {
+    fs.unlink(outputPath, (err) => {
       if (err) console.error('Failed to delete file:', err);
     });
   } catch (error) {

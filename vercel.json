@@ -3,9 +3,16 @@
   "functions": {
     "api/index.js": {
       "memory": 500,
-      "maxDuration": 60
-    }
+      "maxDuration": 5
+    },
+    "api/transcibe.js": {
+      "memory": 200,
+      "maxDuration": 5
   },
-    "routes": [{ "src": "/(.*)", "dest": "/api/index.js" }]
+    "routes": [
+      { "src": "/prompt-nova", "dest": "/api/index.js" },
+      { "src": "/transcribe", "dest": "/api/transcribe.js" }
+  ]
   }
+}
   

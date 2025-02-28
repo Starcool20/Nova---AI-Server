@@ -1,16 +1,11 @@
 const express = require('express');
 const multer = require('multer');
-const ffmpeg = require('fluent-ffmpeg');
 const fs = require('fs');
 const path = require('path');
 const OpenAI = require("openai");
-const { Readable } = require('stream');
 const bodyParser = require('body-parser');
-const FormData = require('form-data');
 
 const app = express();
-const ffmpegPath = path.join(__dirname, 'bin', 'ffmpeg');
-ffmpeg.setFfmpegPath(ffmpegPath);
 const upload = multer({ dest: '/tmp' });
 
 // Middleware to parse JSON
@@ -40,22 +35,6 @@ const handler = (req, res) => {
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
-
-async function convertAudio(inputPath, outputPath, format = 'mp3') { 
-  return new Promise((resolve, reject) => {
-    ffmpeg(inputPath)
-      .toFormat(format) // 'mp3' or 'wav'
-      .on('error', (err) => {
-        console.error('Error during conversion:', err.message);
-        reject(err);
-      })
-      .on('end', () => {
-        console.log('Conversion finished:', outputPath);
-        resolve(outputPath);
-      })
-      .save(outputPath);
-  });
-}
 
 // Function to get GPT-generated response based on transcription
 async function getGPTResponse(data_json, transcription) {
@@ -245,12 +224,14 @@ Your responses should be witty, humorous, and light-hearted.
 
 For the following user commands, respond with the specified format:
 
-- Open {APP_NAME} → Respond with "Open {PACKAGE_NAME}"  
+- Open {APP_NAME} or something similar → Respond with "Open {PACKAGE_NAME}"  
   (Use installed package names from \${data_json.installed_apps}.)  
-- Call {CONTACT_NAME} → Respond with "Call {CONTACT_NAME}"  
-- Set an alarm for {TIME} → Respond with "Set alarm {TIME}"  
-- Play {SONG_NAME} → Respond with "Play {SONG_NAME}"  
-- Send a message (or SMS) to {CONTACT_NAME} → Respond with "Send message {CONTACT_NAME}"  
+- Call {CONTACT_NAME} or something similar → Respond with "Call {CONTACT_NAME}"  
+- Set an alarm for {TIME} or something similar→ Respond with "Set alarm {TIME}"  
+- Play {SONG_NAME} or something similar → Respond with "Play {SONG_NAME}"  
+- Send a message (or SMS) to {CONTACT_NAME} or something similar to it→ Respond with "Send message {CONTACT_NAME}"  
+- Set or add an event to my calendar {TITLE}, {DESCRIPTION}, {STARTIME}, {ENDTIME}, {EVENT_LOCATION} → Respond with "Add event {TITLE}, {DESCRIPTION}, {STARTIME}, {ENDTIME}, {EVENT_LOCATION} else if there are not any value there replace it with something similar"
+- Go home or to launcher or something similar → Respond with "Go home"
 
 Device Checks & Responses:  
 For the following system-related commands, respond with the specified phrases:
@@ -262,41 +243,20 @@ For the following system-related commands, respond with the specified phrases:
 - Check my phone location → "Check location"  
 - Check my phone WiFi → "Check WiFi"  
 - Check my phone internet → "Check internet"  
-- Check my phone flashlight → "Check flashlight"  
-- Check my phone speaker → "Check speaker"  
+- Turn on my phone flashlight → "On flashlight"
+- Turn off my phone flashlight → "Off flashlight"
+- Check my phone speaker → "Check Speaker"
 - Check my phone microphone → "Check microphone"  
 - Check my phone vibration → "Check vibration"  
 - Check my phone language → "Check language"  
-- Check my phone time → "Check time"  
-- Check my phone date → "Check date"  
 - Check my phone weather → "Check weather"  
 - Check my phone news → "Check news"  
-- Check my phone calendar → "Check calendar"  
-- Check my phone reminder → "Check reminder"  
-- Check my phone notes → "Check notes"  
-- Check my phone calculator → "Check calculator"  
-- Check my phone clock → "Check clock"  
-- Check my phone stopwatch → "Check stopwatch"  
-- Check my phone timer → "Check timer"  
-- Check my phone alarm → "Check alarm"  
-- Check my phone call log → "Check call log"  
-- Check my phone message log → "Check message log"  
-- Check my phone contact list → "Check contact list"  
-- Check my phone gallery → "Check gallery"  
-- Check my phone camera roll → "Check camera roll"  
-- Check my phone photos → "Check photos"  
-- Check my phone videos → "Check videos"  
-- Check my phone music → "Check music"  
-- Check my phone documents → "Check documents"  
-- Check my phone downloads → "Check downloads"  
-- Check my phone browser history → "Check browser history"  
-- Check my phone search history → "Check search history"  
-- Check my phone call history → "Check call history"  
+- Check my phone contact list → "Check contact list"      
 - Check my phone message history → "Check message history"  
 - Check my phone notification history → "Check notification history"  
 
 Additional Instructions:  
-1. Ensure responses are humorous and witty. Example:  
+1. Ensure responses are humorous and witty. 
 
 2. Always process only the latest message and ignore previous conversations unless relevant to the context.  
 
@@ -315,7 +275,6 @@ Additional Instructions:
     });
 
     const text = response.choices[0].message.content;
-    console.log('success');
 
     resolve(text);
   }

@@ -1,14 +1,11 @@
 const express = require('express');
-const multer = require('multer');
-const ffmpeg = require('fluent-ffmpeg');
-const fs = require('fs');
-const path = require('path');
 const OpenAI = require("openai");
-const { Readable } = require('stream');
 const bodyParser = require('body-parser');
-const FormData = require('form-data');
 
 const app = express();
+
+// Middleware to parse JSON
+app.use(bodyParser.json());
 
 // Enable CORS
 const allowCors = (fn) => async (req, res) => {
@@ -36,7 +33,43 @@ const openai = new OpenAI({
 });
 
 app.post("/transcribe", async (req, res) => {
+    // Get the JSON metadata
+    const metadata = req.body.metadata;
 
+    const metadataJson = JSON.parse(metadata);
+
+    // Generate a TTS transcribe audio
+    const ttsBuffer = await getTTSStream(metadataJson.transcription);
+
+    res.setHeader("Content-Type", "audio/mpeg");
+    res.setHeader("Content-Length", ttsBuffer.length);
+    res.end(ttsBuffer);
+
+    console.log("Transcription audio generated.");
 });
+
+async function getTTSStream(text) {
+    try {
+      // Request TTS audio from OpenAI
+      const mp3 = await openai.audio.speech.create({
+        model: "tts-1",
+        voice: "nova",
+        input: text,
+      });
+  
+      // Convert response to a buffer
+      const arrayBuffer = await mp3.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+  
+      if (!buffer || buffer.length === 0) {
+        throw new Error("Empty TTS response received.");
+      }
+  
+      return buffer;
+    } catch (error) {
+      console.error("Error generating TTS audio:", error);
+      throw error; // Properly propagate the error
+    }
+  }
 
 module.exports = allowCors(handler);

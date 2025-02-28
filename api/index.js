@@ -373,16 +373,6 @@ async function getTTSStream(text) {
   }
 }
 
-async function getTTSStream(text) {
-  return new Promise(async (resolve, reject) => {
-    try {
-    } catch (e) {
-      console.error('Error streaming text to speech:', e);
-      reject(e);
-    }
-    
-
-
 app.get('/', (req, res) => {
   res.status(200).send('Hello, world!');
 });

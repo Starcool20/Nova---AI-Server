@@ -4,7 +4,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const { getGPTResponse } = require('./nova/gpt/chat-completion/GPT.js');
 const { getTranscription } = require('./nova/gpt/transcription/Whisper.js');
-const { getTTSStream } = require('./nova/gpt/tts/tts.js');
+const { getTTSStream } = require('./nova/gpt/tts/TTS.js');
 const { overwriteFile, deleteFile } = require('./nova/gpt/file-handler/File-Handler.js');
 
 const app = express();

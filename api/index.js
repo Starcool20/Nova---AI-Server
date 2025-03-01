@@ -55,32 +55,34 @@ app.post('/prompt-nova', upload.single('audio'), async (req, res) => {
 
     const outputPath = path.join('/tmp', 'nova.mp3');
 
+    // Overwrite the file to a new path
     await overwriteFile(originalFilePath, outputPath);
 
+    // Get transcription of the audio file
     const transcription = await getTranscription(outputPath);
 
-    // Step 2: Generate response using GPT based on the transcription
+    // Generate response using GPT based on the transcription
     const gptResponse = await getGPTResponse(metadataJson, transcription);
 
     console.log('GPT Response:', gptResponse);
 
-    // Step 3: Stream the GPT response as TTS audio
+    // Stream the GPT response as TTS audio
     const ttsBuffer = await getTTSStream(gptResponse);
 
-    // Step 2: Create Metadata JSON
+    // Create Metadata JSON
     const metadata2 = JSON.stringify({ transcript: transcription, response: "Success" }) + "\n";
     const metadataBuffer = Buffer.from(metadata2, "utf-8");
 
-    // Step 3: Combine Metadata and MP3 Audio in One Response
+    // Combine Metadata and MP3 Audio in One Response
     const finalBuffer = Buffer.concat([metadataBuffer, ttsBuffer]);
 
-    // Step 4: Send Response as a Single Buffer
+    // Send Response as a Single Buffer
     res.setHeader("Content-Type", "application/octet-stream");
     res.setHeader("Content-Disposition", 'attachment; filename="speech.mp3"');
     res.send(finalBuffer);
     
     // Cleanup: Delete the audio file after processing
-   await deleteFile(outputPath);
+    await deleteFile(outputPath);
   } catch (error) {
     console.error(error);
     res.status(500).send('Error processing the audio file.');

@@ -34,7 +34,7 @@ const handler = (req, res) => {
 };
 
 app.get('/', (req, res) => {
-  const filePath = path.join(process.cwd(), '/api/icon', 'icon.png');
+  const filePath = path.join(process.cwd(), 'api/icon', 'icon.png');
   res.sendFile(filePath);
 });
 

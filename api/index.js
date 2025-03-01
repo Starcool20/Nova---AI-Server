@@ -352,7 +352,7 @@ app.post('/prompt-nova', upload.single('audio'), async (req, res) => {
 
     const originalFilePath = path.join('/tmp', req.file.filename);
 
-    const outputPath = path.join('/tmp', 'nova.mp4');
+    const outputPath = path.join('/tmp', 'nova.mp3');
 
     fs.rename(originalFilePath, outputPath, (err) => {
       if (err) {

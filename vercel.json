@@ -5,14 +5,15 @@
       "memory": 500,
       "maxDuration": 5
     },
-    "api/transcibe.js": {
+    "api/transcribe.js": {
       "memory": 200,
       "maxDuration": 5
+    }
   },
-    "routes": [
-      { "src": "/prompt-nova", "dest": "/api/index.js" },
-      { "src": "/transcribe", "dest": "/api/transcribe.js" }
+  "routes": [
+    { "src": "/prompt-nova", "dest": "/api/index.js" },
+    { "src": "/transcribe", "dest": "/api/transcribe.js" }
   ]
-  }
 }
+
   

@@ -34,7 +34,8 @@ const handler = (req, res) => {
 };
 
 app.get('/', (req, res) => {
-  res.status(200).send('Hello, world!');
+  const filePath = path.join(process.cwd(), './api/icon', 'icon.png');
+  res.sendFile(filePath);
 });
 
 // Main endpoint to handle audio upload, transcription, GPT response, and TTS streaming

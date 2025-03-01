@@ -3,7 +3,7 @@
   "functions": {
     "api/index.js": {
       "memory": 500,
-      "maxDuration": 5
+      "maxDuration": 20
     },
     "api/transcribe.js": {
       "memory": 200,

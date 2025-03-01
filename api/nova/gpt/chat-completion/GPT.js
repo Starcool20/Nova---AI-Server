@@ -1,6 +1,6 @@
 // Function to get GPT-generated response based on transcription
 const OpenAI = require("openai");
-const novaConfig = require("../nova/gpt/config/novaConfig.js");
+const novaConfig = require("../api/nova/gpt/config/novaConfig.js");
 
 
 // Initialize OpenAI API with API key

@@ -1,4 +1,5 @@
 const OpenAI = require("openai");
+const fs = require("fs");
 
 // Initialize OpenAI API with API key
 const openai = new OpenAI({

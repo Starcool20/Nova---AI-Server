@@ -5,7 +5,7 @@ const path = require('path');
 const OpenAI = require("openai");
 const bodyParser = require('body-parser');
 
-const novaConfig = require("./nova/novaConfig.js");
+const novaConfig = require("./nova/config/novaConfig.js");
 
 const app = express();
 const upload = multer({ dest: '/tmp' });

@@ -12,7 +12,8 @@
   },
   "routes": [
     { "src": "/prompt-nova", "dest": "/api/index.js" },
-    { "src": "/transcribe", "dest": "/api/transcribe.js" }
+    { "src": "/transcribe", "dest": "/api/transcribe.js" },
+    { "source": "/favicon.ico", "destination": "/api/icon/icon.png" }
   ]
 }
 

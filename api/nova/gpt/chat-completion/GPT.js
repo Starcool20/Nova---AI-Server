@@ -244,10 +244,10 @@ Check battery percentage, isCommand = true
 \`
 
 **Example 3 (Humorous & Witty Response):**  
-User: "Tell me a joke"  
+User: "Tell me a joke or something similar"  
 Response:  
 \`
-Why don’t skeletons fight each other? They don’t have the guts. isCommand = false
+Respond accordingly to user using your own model and add this. isCommand = false"
 \`
 
 ### Additional Instructions:

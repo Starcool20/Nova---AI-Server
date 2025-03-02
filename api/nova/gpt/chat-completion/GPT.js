@@ -242,13 +242,6 @@ async function getGPTResponse(data_json, transcription) {
             \`
             Check battery percentage, isCommand = true
             \`
-
-            **Example 3:**
-            User: "Respond with a witty or humorous response?"  
-            Response:  
-            \`
-            OK, isCommand = false
-            \`
             
             Additional Instructions:  
             1. If a command matches the predefined list, respond **only** with the specified format and a command with "isCommand = true".  

@@ -261,8 +261,8 @@ async function getGPTResponse(data_json, transcription) {
         max_completion_tokens: 1024,
       });
   
-      const text = response.choices[0].message.content;
-      const isCommand = getIsCommand(text);
+      const text = extractCommands(response.choices[0].message.content);
+      const isCommand = getIsCommand(response.choices[0].message.content);
 
       console.log('GPT Response:', text);
       console.log('isCommand:', isCommand);
@@ -279,6 +279,17 @@ async function getGPTResponse(data_json, transcription) {
   function getIsCommand(text) {
     const match = text.match(/isCommand\s*=\s*(true|false)/i);
     return match ? match[1] === "true" : null;
+}
+
+function extractCommands(text) {
+  const regex = /`([^`]+),\s*isCommand\s*=\s*true`/g;
+  let matches, commands = [];
+
+  while ((matches = regex.exec(text)) !== null) {
+      commands.push(matches[1].trim());
+  }
+
+  return commands;
 }
 
     module.exports = {getGPTResponse};

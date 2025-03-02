@@ -292,7 +292,7 @@ Respond accordingly to user using your own model and add this. isCommand = false
 }
 
 function extractCommands(text) {
-  const regex = /`([^`]+?),\s*isCommand\s*=\s*(true|false)`/g;
+  const regex = /`(.*?)`,\s*isCommand\s*=\s*(true|false)/g;
   let matches, commands = [];
 
   while ((matches = regex.exec(text)) !== null) {
@@ -301,5 +301,6 @@ function extractCommands(text) {
 
   return commands;
 }
+
 
     module.exports = {getGPTResponse};

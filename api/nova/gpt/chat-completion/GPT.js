@@ -245,7 +245,7 @@ async function getGPTResponse(data_json, transcription) {
             
             Additional Instructions:  
             1. If a command matches the predefined list, respond **only** with the specified format and a command with "isCommand = true".  
-            2. If a command does not match, respond with a witty or humorous response with "isCommand = false".  
+            2. If a command does not match, respond with a witty or humorous response and add this to it at the end of statement", isCommand = false".  
             3. Always process only the **latest message**, ignoring past history unless relevant.  
             4. Use installed app package names from \${data_json.installed_apps} when responding to app-related commands.  
             5. Ensure compatibility with **Android API 21 to 36**, allowing third-party app integration.

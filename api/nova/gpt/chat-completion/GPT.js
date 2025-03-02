@@ -292,11 +292,11 @@ Respond accordingly to user using your own model and add this. isCommand = false
 }
 
 function extractCommands(text) {
-  const regex = /`([^`]+),\s*isCommand\s*=\s*true`/g;
+  const regex = /`([^`]+?),\s*isCommand\s*=\s*(true|false)`/g;
   let matches, commands = [];
 
   while ((matches = regex.exec(text)) !== null) {
-      commands.push(matches[1].trim());
+      commands.push(matches[1].trim()); // Extract and trim command text
   }
 
   return commands;

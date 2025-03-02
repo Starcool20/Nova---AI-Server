@@ -260,9 +260,13 @@ async function getGPTResponse(data_json, transcription) {
         temperature: 0.7,
         max_completion_tokens: 1024,
       });
+
+      const responseText = response.choices[0].message.content;
+
+      console.log('GPT Response:', responseText);
   
-      const text = extractCommands(response.choices[0].message.content);
-      const isCommand = getIsCommand(response.choices[0].message.content);
+      const text = extractCommands(responseText);
+      const isCommand = getIsCommand(responseText);
 
       console.log('GPT Response:', text);
       console.log('isCommand:', isCommand);

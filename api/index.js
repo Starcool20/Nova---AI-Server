@@ -50,8 +50,6 @@ app.post('/prompt-nova', upload.single('audio'), async (req, res) => {
 
     const metadataJson = JSON.parse(metadata);
 
-    console.log(metadataJson);
-
     const originalFilePath = path.join('/tmp', req.file.filename);
 
     const outputPath = path.join('/tmp', 'nova.mp3');

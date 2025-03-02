@@ -233,19 +233,26 @@ async function getGPTResponse(data_json, transcription) {
             User: "Please can you open YouTube?"  
             Response:  
             \`
-            Open com.google.android.youtube
+            Open com.google.android.youtube, isCommand = true
             \`
             
             **Example 2:**
             User: "Just check my phone battery percentage or can you check the phone battery percentage?"  
             Response:  
             \`
-            Check battery percentage
+            Check battery percentage, isCommand = true
+            \`
+
+            **Example 3:**
+            User: "Respond with a witty or humorous response?"  
+            Response:  
+            \`
+            OK, isCommand = false
             \`
             
             Additional Instructions:  
-            1. If a command matches the predefined list, respond **only** with the specified format.  
-            2. If a command does not match, respond with a witty or humorous response.  
+            1. If a command matches the predefined list, respond **only** with the specified format and a command with "isCommand = true".  
+            2. If a command does not match, respond with a witty or humorous response with "isCommand = false".  
             3. Always process only the **latest message**, ignoring past history unless relevant.  
             4. Use installed app package names from \${data_json.installed_apps} when responding to app-related commands.  
             5. Ensure compatibility with **Android API 21 to 36**, allowing third-party app integration.
@@ -262,8 +269,12 @@ async function getGPTResponse(data_json, transcription) {
       });
   
       const text = response.choices[0].message.content;
+      const isCommand = getIsCommand(text);
+
+      console.log('GPT Response:', text);
+      console.log('isCommand:', isCommand);
   
-      resolve(text);
+    resolve({ isCommand: isCommand, response: text });
     }
     catch (e) {
       console.error('Error streaming text to speech:', e);
@@ -271,5 +282,10 @@ async function getGPTResponse(data_json, transcription) {
     }
   });
   }
+
+  function getIsCommand(text) {
+    const match = text.match(/isCommand\s*=\s*(true|false)/i);
+    return match ? match[1] === "true" : null;
+}
 
     module.exports = {getGPTResponse};

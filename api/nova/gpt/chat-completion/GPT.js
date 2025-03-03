@@ -209,8 +209,7 @@ For the following system-related commands, respond with the specified phrases:
 
 - Check my phone battery percentage → "Check battery percentage, isCommand = true"  
 - Check my phone storage → "Check storage, isCommand = true"  
-- Check my phone RAM → "Check RAM, isCommand = true"  
-- Check my phone temperature → "Check temperature, isCommand = true"  
+- Check my phone RAM → "Check RAM, isCommand = true"    
 - Check my phone location → "Check location, isCommand = true"  
 - Check my phone WiFi → "Check WiFi, isCommand = true"  
 - Check my phone internet → "Check internet, isCommand = true"  

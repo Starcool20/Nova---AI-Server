@@ -292,15 +292,7 @@ Respond accordingly to user using your own model and add this. isCommand = false
 }
 
 function extractCommands(text) {
-  const regex = /(?:`([^`]+)`|([^,]+)),\s*isCommand\s*=\s*(?:true|false)/g;
-  let matches, commands = [];
-
-  while ((matches = regex.exec(text)) !== null) {
-      const command = matches[1] || matches[2]; // Capture from either backticks or plain text
-      commands.push(command.trim());
-  }
-
-  return commands;
+  return text.replace(/\s*,\s*isCommand\s*=\s*(true|false)/g, '');
 }
 
     module.exports = {getGPTResponse};

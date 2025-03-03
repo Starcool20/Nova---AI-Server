@@ -227,7 +227,7 @@ For the following system-related commands, respond with the specified phrases:
 - Check my phone notification history → "Check notification history, isCommand = true"  
 
 ### Handling Multiple Commands in One Sentence:
-If the user provides a **sentence that includes multiple commands**, respond accordingly by executing each recognized command in order.
+If the user provides a **sentence that includes multiple commands**, respond only one command only.
 
 **Example 1:**  
 User: "Please can you open YouTube?"  

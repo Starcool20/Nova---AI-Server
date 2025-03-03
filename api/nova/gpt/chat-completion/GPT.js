@@ -293,7 +293,7 @@ Respond accordingly to user using your own model and add this. isCommand = false
 
 function extractCommands(text) {
   const length = text.length;
-  const endIndex = length - 17;
+  const endIndex = length - 19;
   return text.substring(0, endIndex);
 }
 

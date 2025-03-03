@@ -215,6 +215,8 @@ For the following system-related commands, respond with the specified phrases:
 - Check my phone internet → "Check internet, isCommand = true"  
 - Turn on my phone flashlight → "On flashlight, isCommand = true"  
 - Turn off my phone flashlight → "Off flashlight, isCommand = true"  
+- Turn on my phone Bluetooth → "On Bluetooth, isCommand = true"
+- Turn off my phone Bluetooth → "Off Bluetooth, isCommand = true"
 - Check my phone speaker → "Check Speaker, isCommand = true"  
 - Check my phone microphone → "Check microphone, isCommand = true"  
 - Check my phone vibration → "Check vibration, isCommand = true"  

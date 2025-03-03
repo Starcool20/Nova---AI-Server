@@ -292,7 +292,7 @@ Respond accordingly to user using your own model and add this. isCommand = false
 }
 
 function extractCommands(text) {
-  return text.replace(/\s*,\s*isCommand\s*=\s*(true|false)/g, '');
+  return text.replace(/\bisCommand\s*=\s*(true|false)\b/, '');
 }
 
     module.exports = {getGPTResponse};

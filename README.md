@@ -25,4 +25,4 @@ The Nova Server enables the Android app to:
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/Starcool20/Nova---AI-Server-
+   git clone https://github.com/Starcool20/Nova---AI-Server

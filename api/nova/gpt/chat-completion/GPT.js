@@ -293,8 +293,9 @@ Respond accordingly to user using your own model and add this. isCommand = false
 }
 
 function extractCommands(text) {
-  const length = text.length;
-  const endIndex = length - 19;
+  const str = text.replace(/^["']|["']$/g, '');
+  const length = str.length;
+  const endIndex = length - 16;
   return text.substring(0, endIndex);
 }
 

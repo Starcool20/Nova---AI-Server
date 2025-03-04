@@ -294,7 +294,8 @@ Respond accordingly to user using your own model and add this. isCommand = false
 
 function extractCommands(text) {
   const str = text.replace(/^["']|["']$/g, '');
-  const length = str.length;
+  const str2 = str.replace(/,/g, '');
+  const length = str2.length;
   const endIndex = length - 17;
   return text.substring(0, endIndex);
 }

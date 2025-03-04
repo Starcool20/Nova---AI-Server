@@ -70,7 +70,7 @@ app.post('/prompt-nova', upload.single('audio'), async (req, res) => {
     const ttsBuffer = await getTTSStream(gptResponse.response);
 
     // Create Metadata JSON
-    const metadata2 = JSON.stringify({ transcript: transcription, response: getGPTResponse.response }) + "\n";
+    const metadata2 = JSON.stringify({ transcript: transcription, response: gptResponse.response }) + "\n";
     const metadataBuffer = Buffer.from(metadata2, "utf-8");
 
     // Combine Metadata and MP3 Audio in One Response
@@ -81,7 +81,7 @@ app.post('/prompt-nova', upload.single('audio'), async (req, res) => {
     res.setHeader("Content-Disposition", 'attachment; filename="speech.mp3"');
     res.send(finalBuffer);
     } else {
-      const json = JSON.stringify({ response: getGPTResponse.response, transcript: transcription }) + "\n";
+      const json = JSON.stringify({ response: gptResponse.response, transcript: transcription }) + "\n";
 
       res.setHeader("Content-Type", "application/json");
       res.send(json);

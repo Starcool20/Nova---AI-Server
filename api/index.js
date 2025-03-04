@@ -81,7 +81,7 @@ app.post('/prompt-nova', upload.single('audio'), async (req, res) => {
     res.setHeader("Content-Disposition", 'attachment; filename="speech.mp3"');
     res.send(finalBuffer);
     } else {
-      const json = JSON.stringify({ response: getGPTResponse.response, transript: transcription }) + "\n";
+      const json = JSON.stringify({ response: getGPTResponse.response, transcript: transcription }) + "\n";
 
       res.setHeader("Content-Type", "application/json");
       res.send(json);

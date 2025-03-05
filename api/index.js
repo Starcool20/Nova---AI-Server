@@ -82,7 +82,7 @@ app.post('/prompt-nova', upload.single('audio'), async (req, res) => {
     res.send(finalBuffer);
     } else {
       // Get command from GPT response
-      const command = getCommand(gptResponse.response);
+      const command = await getCommand(gptResponse.response);
 
       const json = JSON.stringify({ response: gptResponse.response, transcript: transcription, packageName: command.packageName, command: command.command, contactName: command.contactName, time: command.time, songName: command.songName, title: command.title, description: command.description, startTime: command.startTime, endTime: command.endTime, eventLocation: command.eventLocation, checkCommand: command.checkCommand }) + "\n";
 

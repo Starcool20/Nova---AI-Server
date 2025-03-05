@@ -13,7 +13,6 @@ function getTranscription(file) {
     const transcription = await openai.audio.transcriptions.create({
       file: fs.createReadStream(file),
       model: "whisper-1",
-      language: "en",
       temperature: 0.3
     });
     resolve(transcription.text);

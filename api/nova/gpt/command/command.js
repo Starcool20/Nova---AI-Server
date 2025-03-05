@@ -46,8 +46,7 @@ function getCommand(text) {
 }
 
 function removeIsCommandText(text) {
-  const str = text.replace(/^["']|["']$/g, '');
-  const str2 = str.replace(/,/g, '');
+  const str2 = text.replace(/,/g, '');
   const length = str2.length;
   const endIndex = length - 17;
   return str2.substring(0, endIndex);

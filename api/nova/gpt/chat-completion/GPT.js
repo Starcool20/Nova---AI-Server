@@ -236,14 +236,14 @@ If the user provides a **sentence that includes multiple commands**, respond onl
 User: "Please can you open YouTube?"  
 Response:  
 \`
-Open com.google.android.youtube, isCommand = true
+Open "com.google.android.youtube", isCommand = true
 \`
 
 **Example 2:**  
 User: "Just check my phone battery percentage or can you check the phone battery percentage?"  
 Response:  
 \`
-Check battery percentage, isCommand = true
+Check "battery percentage", isCommand = true
 \`
 
 **Example 3 (Humorous & Witty Response):**   
@@ -255,17 +255,17 @@ Respond accordingly to user using your own model and add this. isCommand = false
 **Example 4:**   
 Response:  "Please can you turn on my flashlight."
 \`
-On flashlight. isCommand = true"
+On "flashlight". isCommand = true"
 \`
 
 **Example 5:**   
 Response:  "Turn on my Bluetooth."
 \`
-On Bluetooth. isCommand = true"
+On "Bluetooth". isCommand = true"
 \`
 
 ### Additional Instructions:
-1. If a command matches the predefined list, respond **only** with the specified format and include "isCommand = true".  
+1. If a command matches the predefined list, respond **only** with the specified format and include a double qoute in the command eg open "com.google.android.youtube" with "isCommand = true".  
 2. If a command does not match, respond with a **witty or humorous** reply **and include "isCommand = false" instead of "isCommand = true"**.  
 3. Always process **only the latest message**, ignoring past history unless relevant.  
 4. Use installed app package names from ${data_json.installed_apps} when responding to app-related commands, if You cannot find the user requested app package name respond with "App not found isCommand = false".  

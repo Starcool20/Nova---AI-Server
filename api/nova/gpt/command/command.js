@@ -18,23 +18,23 @@ function getCommand(text) {
       let checkCommand = null;
 
       if (command.startsWith('open')) {
-        packageName = response.split(' ')[1];
+        packageName = response.trim().split(/\s+/)[1]; 
       } else if (command.startsWith('call')) {
-        contactName = response.split(' ')[1];
+        contactName = response.trim().split(/\s+/)[1]; 
       } else if (command.startsWith('set')) {
-        time = response.split(' ')[2];
+        time = response.trim().split(/\s+/)[2]; 
       } else if (command.startsWith('play')) {
-        songName = response.split(' ')[1];
+        songName = response.trim().split(/\s+/)[1]; 
       } else if (command.startsWith('send')) {
-        contactName = response.split(' ')[1];
+        contactName = response.trim().split(/\s+/)[1]; 
       }else if (command.startsWith('add')) {
-        title = response.split(' ')[2];
-        description = response.split(' ')[3];
-        startTime = response.split(' ')[4];
-        endTime = response.split(' ')[5];
-        eventLocation = response.split(' ')[6];
+        title = response.trim().split(/\s+/)[2]; 
+        description = response.trim().split(/\s+/)[3]; 
+        startTime = response.trim().split(/\s+/)[4]; 
+        endTime = response.trim().split(/\s+/)[5]; 
+        eventLocation = response.trim().split(/\s+/)[6]; 
       }else if (command.startsWith('check')) {
-        checkCommand = response.split(' ')[1];
+        checkCommand = response.trim().split(/\s+/)[1]; 
       }
 
       resolve({ response: response, packageName: packageName, command: command, contactName: contactName, time: time, songName: songName, title: title, description: description, startTime: startTime, endTime: endTime, eventLocation: eventLocation, checkCommand: checkCommand });

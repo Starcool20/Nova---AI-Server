@@ -18,7 +18,7 @@ function getCommand(text) {
       let checkCommand = null;
 
       if (command.startsWith('open')) {
-        packageName = response.substring(4, response.trim().length).trim();
+        packageName = response.substring(4, response.length).trim();
       } else if (command.startsWith('call')) {
         contactName = response.trim().split(/\s+/)[1]; 
       } else if (command.startsWith('set')) {

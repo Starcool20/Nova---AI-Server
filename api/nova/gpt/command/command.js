@@ -3,7 +3,8 @@
 function getCommand(text) {
   return new Promise((resolve, reject) => {
     try {
-      const command = text.split(' ')[0].toLowerCase();
+      const response = removeBackticks(text);
+      const command = response.split(' ')[0].toLowerCase();
       //const isCommand = getIsCommand(text);
       let packageName = null;
       let contactName = null;
@@ -18,7 +19,7 @@ function getCommand(text) {
 
       if (command.startsWith('open')) {
       console.log('open command');
-        packageName = extractQuotedText(text);
+        packageName = extractQuotedText(response);
       } else if (command.startsWith('call')) {
         contactName = response.trim().split(/\s+/)[1]; 
       } else if (command.startsWith('set')) {
@@ -37,12 +38,16 @@ function getCommand(text) {
         checkCommand = response.trim().split(/\s+/)[1]; 
       }
 
-      resolve({ response: text, packageName: packageName, command: command, contactName: contactName, time: time, songName: songName, title: title, description: description, startTime: startTime, endTime: endTime, eventLocation: eventLocation, checkCommand: checkCommand });
+      resolve({ response: response, packageName: packageName, command: command, contactName: contactName, time: time, songName: songName, title: title, description: description, startTime: startTime, endTime: endTime, eventLocation: eventLocation, checkCommand: checkCommand });
     } catch (error) {
       console.error(error);
       reject('Error processing the audio file.');
     }
   });
+}
+
+function removeBackticks(input) {
+  return input.replace(/`/g, ''); // Replace all backticks with an empty string
 }
 
 function extractQuotedText(input) {

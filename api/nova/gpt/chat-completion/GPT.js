@@ -286,7 +286,7 @@ On Bluetooth. isCommand = true"
       const isCommand = getIsCommand(responseText);
       const text = removeIsCommandText(responseText);
 
-      console.log('GPT Response:', responseText);
+      console.log('GPT Response:', text);
   
     resolve({ response: text, isCommand: isCommand });
     }

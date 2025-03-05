@@ -18,7 +18,7 @@ function getCommand(text) {
       let checkCommand = null;
 
       if (command.startsWith('open')) {
-        packageName = response.substring(4, response.length).trim();
+        packageName = extractQuotedText(response);
       } else if (command.startsWith('call')) {
         contactName = response.trim().split(/\s+/)[1]; 
       } else if (command.startsWith('set')) {
@@ -51,6 +51,11 @@ function removeIsCommandText(text) {
   const length = str2.length;
   const endIndex = length - 17;
   return str2.substring(0, endIndex);
+}
+
+function extractQuotedText(input) {
+  let match = input.match(/"([^"]+)"/); // Find the first occurrence inside quotes
+  return match ? match[1] : null; // Return the matched text or null if not found
 }
 
 function getIsCommand(text) {

@@ -3,8 +3,7 @@
 function getCommand(text) {
   return new Promise((resolve, reject) => {
     try {
-      const response = removeIsCommandText(text);
-      const command = response.split(' ')[0].toLowerCase();
+      const command = text.split(' ')[0].toLowerCase();
       //const isCommand = getIsCommand(text);
       let packageName = null;
       let contactName = null;
@@ -44,13 +43,6 @@ function getCommand(text) {
       reject('Error processing the audio file.');
     }
   });
-}
-
-function removeIsCommandText(text) {
-  const str2 = text.replace(/,/g, '');
-  const length = str2.length;
-  const endIndex = length - 17;
-  return str2.substring(0, endIndex);
 }
 
 function extractQuotedText(input) {

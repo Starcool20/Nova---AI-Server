@@ -18,7 +18,7 @@ function getCommand(text) {
 
       if (command.startsWith('open')) {
       console.log('open command');
-        packageName = extractQuotedText(response);
+        packageName = extractQuotedText(text);
       } else if (command.startsWith('call')) {
         contactName = response.trim().split(/\s+/)[1]; 
       } else if (command.startsWith('set')) {

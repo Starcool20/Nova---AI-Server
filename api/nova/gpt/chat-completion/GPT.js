@@ -196,7 +196,7 @@ Your responses should be witty, humorous, and light-hearted and add "isCommand =
 For the following user commands, respond with the specified format:
 
 - Open {APP_NAME} or something similar or even add a sentence to it as far as you recognize its command → Respond with "Open {PACKAGE_NAME}, isCommand = true"  
-  (Use installed package names from \${data_json.installed_apps}.)  
+  (This are my installed apps package name use it ${data_json.installed_apps}. if You cannot find the user requested app package name respond with "App not found")  
 - Call {CONTACT_NAME} or or something similar or even add a sentence to it as far as you recognize its command → Respond with "Call {CONTACT_NAME}, isCommand = true"  
 - Set an alarm for {TIME} or or something similar or even add a sentence to it as far as you recognize its command → Respond with "Set alarm {TIME}, isCommand = true"  
 - Play {SONG_NAME} or or something similar or even add a sentence to it as far as you recognize its command → Respond with "Play {SONG_NAME}, isCommand = true"  
@@ -284,10 +284,11 @@ On Bluetooth. isCommand = true"
 
       const responseText = response.choices[0].message.content;
       const isCommand = getIsCommand(responseText);
+      const text = removeIsCommandText(responseText);
 
       console.log('GPT Response:', responseText);
   
-    resolve({ response: responseText, isCommand: isCommand });
+    resolve({ response: text, isCommand: isCommand });
     }
     catch (e) {
       console.error('Error streaming text to speech:', e);
@@ -299,6 +300,14 @@ On Bluetooth. isCommand = true"
   function getIsCommand(text) {
     const match = text.match(/isCommand\s*=\s*(true|false)/i);
     return match ? match[1] === "true" : null;
+}
+
+function removeIsCommandText(text) {
+  const str = text.replace(/^["']|["']$/g, '');
+  const str2 = str.replace(/,/g, '');
+  const length = str2.length;
+  const endIndex = length - 17;
+  return str2.substring(0, endIndex);
 }
 
     module.exports = {getGPTResponse};

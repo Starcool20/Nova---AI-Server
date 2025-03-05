@@ -185,7 +185,7 @@ async function getGPTResponse(data_json, transcription) {
         }
       ]
       }, {
-            role: "developer",
+            role: "system",
             content: [
               {
                 type: "text",
@@ -196,7 +196,7 @@ Your responses should be witty, humorous, and light-hearted and add "isCommand =
 For the following user commands, respond with the specified format:
 
 - Open {APP_NAME} or something similar or even add a sentence to it as far as you recognize its command → Respond with "Open {PACKAGE_NAME}, isCommand = true"  
-  (This are my installed apps package name use it ${data_json.installed_apps}. if You cannot find the user requested app package name respond with "App not found")  
+  (This are my installed apps package name use it ${data_json.installed_apps}. if You cannot find the user requested app package name respond with "App not found isCommand = false")  
 - Call {CONTACT_NAME} or or something similar or even add a sentence to it as far as you recognize its command → Respond with "Call {CONTACT_NAME}, isCommand = true"  
 - Set an alarm for {TIME} or or something similar or even add a sentence to it as far as you recognize its command → Respond with "Set alarm {TIME}, isCommand = true"  
 - Play {SONG_NAME} or or something similar or even add a sentence to it as far as you recognize its command → Respond with "Play {SONG_NAME}, isCommand = true"  
@@ -268,9 +268,9 @@ On Bluetooth. isCommand = true"
 1. If a command matches the predefined list, respond **only** with the specified format and include "isCommand = true".  
 2. If a command does not match, respond with a **witty or humorous** reply **and include "isCommand = false" instead of "isCommand = true"**.  
 3. Always process **only the latest message**, ignoring past history unless relevant.  
-4. Use installed app package names from \${data_json.installed_apps} when responding to app-related commands.  
+4. Use installed app package names from ${data_json.installed_apps} when responding to app-related commands, if You cannot find the user requested app package name respond with "App not found isCommand = false".  
 5. Ensure compatibility with **Android API 21 to 36**, allowing third-party app integration.  
-6. Use this as the current date \${data_json.date} and time \${data_json.time}.
+6. Use this as the current date ${data_json.date} and time ${data_json.time}.
             `
               }
             ]

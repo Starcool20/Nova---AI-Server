@@ -1,8 +1,8 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
-const bodyParser = require('body-parser');
 const { getGPTResponse } = require('./nova/gpt/chat-completion/GPT.js');
+const { getCommand } = require('./nova/gpt/command/command.js');
 const { getTranscription } = require('./nova/gpt/transcription/Whisper.js');
 const { getTTSStream } = require('./nova/gpt/tts/TTS.js');
 const { overwriteFile, deleteFile } = require('./nova/gpt/file-handler/File-Handler.js');
@@ -11,7 +11,7 @@ const app = express();
 const upload = multer({ dest: '/tmp' });
 
 // Middleware to parse JSON
-app.use(bodyParser.json());
+app.use(express.json());
 
 // Enable CORS
 const allowCors = (fn) => async (req, res) => {
@@ -81,7 +81,10 @@ app.post('/prompt-nova', upload.single('audio'), async (req, res) => {
     res.setHeader("Content-Disposition", 'attachment; filename="speech.mp3"');
     res.send(finalBuffer);
     } else {
-      const json = JSON.stringify({ response: gptResponse.response, transcript: transcription }) + "\n";
+      // Get command from GPT response
+      const command = getCommand(gptResponse.response);
+
+      const json = JSON.stringify({ response: gptResponse.response, transcript: transcription, packageName: command.packageName, command: command.command, contactName: command.contactName, time: command.time, songName: command.songName, title: command.title, description: command.description, startTime: command.startTime, endTime: command.endTime, eventLocation: command.eventLocation, checkCommand: command.checkCommand }) + "\n";
 
       res.setHeader("Content-Type", "application/json");
       res.send(json);

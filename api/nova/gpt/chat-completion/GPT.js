@@ -1,3 +1,5 @@
+// Initiate GPT-4o-mini API with OpenAI to generate responses based on user input
+
 // Function to get GPT-generated response based on transcription
 const OpenAI = require("openai");
 
@@ -207,25 +209,25 @@ For the following user commands, respond with the specified format:
 ### Device Checks & Responses:  
 For the following system-related commands, respond with the specified phrases:
 
-- Check my phone battery percentage → "Check battery percentage, isCommand = true"  
-- Check my phone storage → "Check storage, isCommand = true"  
-- Check my phone RAM → "Check RAM, isCommand = true"    
-- Check my phone location → "Check location, isCommand = true"  
-- Check my phone WiFi → "Check WiFi, isCommand = true"  
-- Check my phone internet → "Check internet, isCommand = true"  
-- Turn on my phone flashlight → "On flashlight, isCommand = true"  
-- Turn off my phone flashlight → "Off flashlight, isCommand = true"  
-- Turn on my phone Bluetooth → "On Bluetooth, isCommand = true"
-- Turn off my phone Bluetooth → "Off Bluetooth, isCommand = true"
-- Check my phone speaker → "Check Speaker, isCommand = true"  
-- Check my phone microphone → "Check microphone, isCommand = true"  
-- Check my phone vibration → "Check vibration, isCommand = true"  
-- Check my phone language → "Check language, isCommand = true"  
-- Check my phone weather → "Check weather, isCommand = true"  
-- Check my phone news → "Check news, isCommand = true"  
-- Check my phone contact list → "Check contact list, isCommand = true"  
-- Check my phone message history → "Check message history, isCommand = true"  
-- Check my phone notification history → "Check notification history, isCommand = true"  
+- Check my phone battery percentage → Respond with "Check battery percentage, isCommand = true"  
+- Check my phone storage → Respond with "Check storage, isCommand = true"  
+- Check my phone RAM → Respond with "Check RAM, isCommand = true"    
+- Check my phone location → Respond with "Check location, isCommand = true"  
+- Check my phone WiFi → Respond with "Check WiFi, isCommand = true"  
+- Check my phone internet → Respond with "Check internet, isCommand = true"  
+- Turn on my phone flashlight → Respond with "On flashlight, isCommand = true"  
+- Turn off my phone flashlight → Respond with "Off flashlight, isCommand = true"  
+- Turn on my phone Bluetooth → Respond with "On Bluetooth, isCommand = true"
+- Turn off my phone Bluetooth → Respond with "Off Bluetooth, isCommand = true"
+- Check my phone speaker → Respond with "Check Speaker, isCommand = true"  
+- Check my phone microphone → Respond with "Check microphone, isCommand = true"  
+- Check my phone vibration → Respond with "Check vibration, isCommand = true"  
+- Check my phone language → Respond with "Check language, isCommand = true"  
+- Check my phone weather → Respond with "Check weather, isCommand = true"  
+- Check my phone news → Respond with "Check news, isCommand = true"  
+- Check my phone contact list → Respond with "Check contact list, isCommand = true"  
+- Check my phone message history → Respond with "Check message history, isCommand = true"  
+- Check my phone notification history → Respond with "Check notification history, isCommand = true"  
 
 ### Handling Multiple Commands in One Sentence:
 If the user provides a **sentence that includes multiple commands**, respond only one command only.
@@ -250,6 +252,18 @@ Response:
 Respond accordingly to user using your own model and add this. isCommand = false"
 \`
 
+**Example 4:**   
+Response:  "Please can you turn on my flashlight."
+\`
+On flashlight. isCommand = true"
+\`
+
+**Example 5:**   
+Response:  "Turn on my Bluetooth."
+\`
+On Bluetooth. isCommand = true"
+\`
+
 ### Additional Instructions:
 1. If a command matches the predefined list, respond **only** with the specified format and include "isCommand = true".  
 2. If a command does not match, respond with a **witty or humorous** reply **and include "isCommand = false" instead of "isCommand = true"**.  
@@ -269,16 +283,11 @@ Respond accordingly to user using your own model and add this. isCommand = false
       });
 
       const responseText = response.choices[0].message.content;
+      const isCommand = getIsCommand(responseText);
 
       console.log('GPT Response:', responseText);
   
-      const text = extractCommands(responseText);
-      const isCommand = getIsCommand(responseText);
-
-      console.log('GPT Response:', text);
-      console.log('isCommand:', isCommand);
-  
-    resolve({ isCommand: isCommand, response: text });
+    resolve({ response: responseText, isCommand: isCommand });
     }
     catch (e) {
       console.error('Error streaming text to speech:', e);
@@ -290,14 +299,6 @@ Respond accordingly to user using your own model and add this. isCommand = false
   function getIsCommand(text) {
     const match = text.match(/isCommand\s*=\s*(true|false)/i);
     return match ? match[1] === "true" : null;
-}
-
-function extractCommands(text) {
-  const str = text.replace(/^["']|["']$/g, '');
-  const str2 = str.replace(/,/g, '');
-  const length = str2.length;
-  const endIndex = length - 17;
-  return text.substring(0, endIndex);
 }
 
     module.exports = {getGPTResponse};

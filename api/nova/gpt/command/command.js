@@ -16,7 +16,7 @@ function getCommand(text) {
       let eventLocation = null;
       let checkCommand = null;
 
-      if (command === 'open') {
+      if (command.startsWith('open')) {
       console.log('open command');
         packageName = extractQuotedText(response);
       } else if (command.startsWith('call')) {

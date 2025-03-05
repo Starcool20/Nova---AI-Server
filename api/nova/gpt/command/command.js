@@ -37,7 +37,7 @@ function getCommand(text) {
         checkCommand = response.trim().split(/\s+/)[1]; 
       }
 
-      resolve({ response: response, packageName: packageName, command: command, contactName: contactName, time: time, songName: songName, title: title, description: description, startTime: startTime, endTime: endTime, eventLocation: eventLocation, checkCommand: checkCommand });
+      resolve({ response: text, packageName: packageName, command: command, contactName: contactName, time: time, songName: songName, title: title, description: description, startTime: startTime, endTime: endTime, eventLocation: eventLocation, checkCommand: checkCommand });
     } catch (error) {
       console.error(error);
       reject('Error processing the audio file.');

@@ -67,7 +67,7 @@ app.post('/prompt-nova', upload.single('audio'), async (req, res) => {
 
     if (!isCommand) {
     // Stream the GPT response as TTS audio
-    const ttsBuffer = await getTTSStream(gptResponse.response);
+    const ttsBuffer = await getTTSStream(gptResponse.text);
 
     // Create Metadata JSON
     const metadata2 = JSON.stringify({ transcript: transcription, response: gptResponse.response }) + "\n";

@@ -288,7 +288,7 @@ On "Bluetooth". isCommand = true"
 
       console.log('GPT Response:', text);
   
-    resolve({ response: text, isCommand: isCommand });
+    resolve({ response: responseText, isCommand: isCommand, text: text });
     }
     catch (e) {
       console.error('Error streaming text to speech:', e);

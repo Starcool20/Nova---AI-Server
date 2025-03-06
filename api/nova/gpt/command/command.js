@@ -26,10 +26,13 @@ function getCommand(text) {
         console.log('call command', contactName);
       } else if (command.startsWith('set')) {
         hour = extractQuotedText(response);
+        console.log('set command', hour);
         minutes = extractSecondQuotedText(response);
       } else if (command.startsWith('play')) {
+        console.log('play command');
         songName = extractQuotedText(response);
       } else if (command.startsWith('send')) {
+        console.log('send command');
         message = extractQuotedText(response);
         contactName = extractSecondQuotedText(response);
       }else if (command.startsWith('email')) {
@@ -58,13 +61,13 @@ function removeBackticks(input) {
 }
 
 function extractSecondQuotedText(input) {
-  let match = input.match(/"([^"]+)"[^"]+"([^"]+)"/); // Match two quoted texts
-  return match ? match[2] : null; // Return the second matched text or null if not found
+  const matches = [...input.matchAll(/"([^"]*)"/g)]; // Get all matches
+  return matches.length > 1 ? matches[1][1] : null; // Return the second match or null
 }
 
 
 function extractQuotedText(input) {
-  let match = input.match(/"([^"]+)"/); // Find the first occurrence inside quotes
+  let match = input.match(/"([^"]*)"/); // Find the first occurrence inside quotes
   return match ? match[1] : null; // Return the matched text or null if not found
 }
 

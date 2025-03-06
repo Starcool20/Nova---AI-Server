@@ -284,7 +284,7 @@ Set "0" hour "50" minutes, isCommand = true"
 3. Always process **only the latest message**, ignoring past history unless relevant.  
 4. Use installed app package names from ${data_json.installed_apps} when responding to app-related commands,if you cannot find the app name use the package name to guess it, if You cannot find the user requested app package name respond with "App not found isCommand = false".  
 5. Ensure compatibility with **Android API 21 to 36**, allowing third-party app integration.  
-6. Use this as the current date ${data_json.date} and time ${data_json.time}.
+6. Use this as the current date ${data_json.date} and time ${data_json.time} in case someone asked todays date.
             `
               }
             ]
@@ -320,7 +320,7 @@ function removeIsCommandText(text) {
   const str = text.replace(/^["']|["']$/g, '');
   const str2 = str.replace(/,/g, '');
   const length = str2.length;
-  const endIndex = length - 19;
+  const endIndex = length - 17;
   return str2.substring(0, endIndex);
 }
 

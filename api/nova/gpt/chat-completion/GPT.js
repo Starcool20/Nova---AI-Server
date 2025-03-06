@@ -198,7 +198,7 @@ For the following user commands, respond with the specified format:
 - Open {APP_NAME} or something similar or even add a sentence to it as far as you recognize its command → Respond with "Open "{PACKAGE_NAME}", isCommand = true"  
   (This are my installed apps package name use it ${data_json.installed_apps}.if you cannot find the app name use the package name to guess it, if you cannot find the app package name if You cannot find the user requested app package name respond with "App not found isCommand = false")  
 - Call {CONTACT_NAME} or or something similar or even add a sentence to it as far as you recognize its command → Respond with "Call "{CONTACT_NAME}", isCommand = true"  
-- Set an alarm for {TIME} or or something similar or even add a sentence to it as far as you recognize its command → Respond with "Set "{TIME}", isCommand = true"  
+- Set an alarm for {TIME} hour {TIME} minutes or or something similar or even add a sentence to it as far as you recognize its command → Respond with "Set "{TIME}" hour "{TIME}" minutes, isCommand = true"  
 - Play {SONG_NAME} or something similar or even add a sentence to it as far as you recognize its command → Respond with "Play "{SONG_NAME}", isCommand = true"  
 - Send a message (or SMS) to {CONTACT_NAME} or something similar or even add a sentence to it as far as you recognize its command → Respond with "Send "{CONTACT_NAME}", isCommand = true"  
 - Send {Message} to {GMAIL_ADDRESS} on email/gmail or something similar or even add a sentence to it as far as you recognize its command → Respond with "Email "{MESSAGE}" to "{GMAIL_ADDRESS}", isCommand = true"
@@ -258,6 +258,24 @@ Whatsapp "HI" to "Jeri". isCommand = true"
 Response:  "Send HI to Jeri@gmail.com on Gmail."
 \`
 Email "HI" to "Jeri@gmail.com". isCommand = true"
+\`
+
+**Example 6:**   
+Response:  "Set an alarm for 1 hour 50 minutes."
+\`
+Set "1" hour "50" minutes, isCommand = true" 
+\`
+
+**Example 7:**   
+Response:  "Set an alarm for 1 hour "
+\`
+Set "1" hour "0" minutes, isCommand = true" 
+\`
+
+**Example 8:**   
+Response:  "Set an alarm for 50 minutes."
+\`
+Set "0" hour "50" minutes, isCommand = true" 
 \`
 
 ### Additional Instructions:

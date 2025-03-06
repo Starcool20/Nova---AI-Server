@@ -10,7 +10,8 @@ function getCommand(text) {
       //const isCommand = getIsCommand(text);
       let packageName = null;
       let contactName = null;
-      let time = null;
+      let hour = null;
+      let minutes = null;
       let songName = null;
       let message = null;
       let gmailAddress = null;
@@ -22,7 +23,8 @@ function getCommand(text) {
       } else if (command.startsWith('call')) {
         contactName = extractQuotedText(response);
       } else if (command.startsWith('set')) {
-        time = extractQuotedText(response);
+        hour = extractQuotedText(response);
+        minutes = extractSecondQuotedText(response);
       } else if (command.startsWith('play')) {
         songName = extractQuotedText(response);
       } else if (command.startsWith('send')) {
@@ -40,7 +42,7 @@ function getCommand(text) {
         checkCommand = extractQuotedText(response);
       }
 
-      resolve({ response: response, packageName: packageName, command: command, contactName: contactName, time: time, songName: songName, message: message, gmail: gmailAddress, checkCommand: checkCommand });
+      resolve({ response: response, packageName: packageName, command: command, contactName: contactName, hour: hour, minutes: minutes, songName: songName, message: message, gmail: gmailAddress, checkCommand: checkCommand });
     } catch (error) {
       console.error(error);
       reject('Error processing the audio file.');

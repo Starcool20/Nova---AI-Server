@@ -20,11 +20,11 @@ function getCommand(text) {
       console.log('open command');
         packageName = extractQuotedText(response);
       } else if (command.startsWith('call')) {
-        contactName = response.trim().split(/\s+/)[1]; 
+        contactName = extractQuotedText(response);
       } else if (command.startsWith('set')) {
-        time = response.trim().split(/\s+/)[2]; 
+        time = extractQuotedText(response);
       } else if (command.startsWith('play')) {
-        songName = response.trim().split(/\s+/)[1]; 
+        songName = extractQuotedText(response);
       } else if (command.startsWith('send')) {
         contactName = response.trim().split(/\s+/)[1]; 
       }else if (command.startsWith('email')) {

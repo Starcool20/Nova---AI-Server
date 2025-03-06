@@ -18,33 +18,33 @@ function getCommand(text) {
       let gmailAddress = null;
       let checkCommand = null;
 
-      if (command.startsWith('open')) {
+      if (command.includes('open')) {
       console.log('open command');
         packageName = extractQuotedText(response);
-      } else if (command.startsWith('call')) {
+      } else if (command.includes('call')) {
         contactName = extractQuotedText(response);
         console.log('call command', contactName);
-      } else if (command.startsWith('set')) {
+      } else if (command.includes('set')) {
         hour = extractQuotedText(response);
         console.log('set command', hour);
         minutes = extractSecondQuotedText(response);
-      } else if (command.startsWith('play')) {
+      } else if (command.includes('play')) {
         console.log('play command');
         songName = extractQuotedText(response);
-      } else if (command.startsWith('send')) {
+      } else if (command.includes('send')) {
         console.log('send command');
         message = extractQuotedText(response);
         contactName = extractSecondQuotedText(response);
-      }else if (command.startsWith('email')) {
+      }else if (command.includes('email')) {
         message = extractQuotedText(response);
         gmailAddress = extractSecondQuotedText(response);
-      }else if (command.startsWith('whatsapp')) {
+      }else if (command.includes('whatsapp')) {
         message = extractQuotedText(response);
         contactName = extractSecondQuotedText(response);
-      }else if (command.startsWith('telegram')) {
+      }else if (command.includes('telegram')) {
         message = extractQuotedText(response);
         contactName = extractSecondQuotedText(response);
-      }else if (command.startsWith('check')) {
+      }else if (command.includes('check')) {
         checkCommand = extractQuotedText(response);
       }
 

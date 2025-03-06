@@ -28,7 +28,8 @@ function getCommand(text) {
       } else if (command.startsWith('play')) {
         songName = extractQuotedText(response);
       } else if (command.startsWith('send')) {
-        contactName = response.trim().split(/\s+/)[1]; 
+        message = extractQuotedText(response);
+        contactName = extractSecondQuotedText(response);
       }else if (command.startsWith('email')) {
         message = extractQuotedText(response);
         gmailAddress = extractSecondQuotedText(response);

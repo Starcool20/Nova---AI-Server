@@ -6,6 +6,7 @@ function getCommand(text) {
   return new Promise((resolve, reject) => {
     try {
       const response = removeBackticks(text);
+      console.log('response', response);
       const command = response.split(' ')[0].toLowerCase();
       //const isCommand = getIsCommand(text);
       let packageName = null;

@@ -197,7 +197,7 @@ For the following user commands, respond with the specified format:
 
 - Open {APP_NAME} or something similar or even add a sentence to it as far as you recognize its command → Respond with "Open "{PACKAGE_NAME}", isCommand = true"  
   (This are my installed apps package name use it ${data_json.installed_apps}.if you cannot find the app name use the package name to guess it, if you cannot find the app package name if You cannot find the user requested app package name respond with "App not found isCommand = false")  
-- Call {PHONE_NUMBER} or or something similar or even add a sentence to it as far as you recognize its command → Respond with "Call "{PHONE_NUMBER}", isCommand = true"  
+- Call {CONTACT_NAME} or or something similar or even add a sentence to it as far as you recognize its command → Respond with "Call "{CONTACT_NAME}", isCommand = true"  
 - Set an alarm for {TIME} hour {TIME} minutes or or something similar or even add a sentence to it as far as you recognize its command → Respond with "Set "{TIME}" hour "{TIME}" minutes, isCommand = true"  
 - Play {SONG_NAME} or something similar or even add a sentence to it as far as you recognize its command → Respond with "Play "{SONG_NAME}", isCommand = true"  
 - Send {MESSAGE} to {CONTACT_NAME} or something similar or even add a sentence to it as far as you recognize its command → Respond with "Send "{MESSAGE}" to "{CONTACT_NAME}", isCommand = true"  
@@ -276,6 +276,18 @@ Set "1" hour "0" minutes, isCommand = true"
 Response:  "Set an alarm for 50 minutes."
 \`
 Set "0" hour "50" minutes, isCommand = true" 
+\`
+
+**Example 9:**   
+Response:  "What is todays date?"
+\`
+Todays date is ${data_json.date}, isCommand = true" 
+\`
+
+**Example 10:**   
+Response:  "What is the time now."
+\`
+The time is ${data_json.time}, isCommand = true" 
 \`
 
 ### Additional Instructions:

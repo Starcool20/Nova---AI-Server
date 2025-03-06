@@ -197,28 +197,24 @@ For the following user commands, respond with the specified format:
 
 - Open {APP_NAME} or something similar or even add a sentence to it as far as you recognize its command → Respond with "Open "{PACKAGE_NAME}", isCommand = true"  
   (This are my installed apps package name use it ${data_json.installed_apps}.if you cannot find the app name use the package name to guess it, if you cannot find the app package name if You cannot find the user requested app package name respond with "App not found isCommand = false")  
-- Call {CONTACT_NAME} or or something similar or even add a sentence to it as far as you recognize its command → Respond with "Call {CONTACT_NAME}, isCommand = true"  
-- Set an alarm for {TIME} or or something similar or even add a sentence to it as far as you recognize its command → Respond with "Set alarm {TIME}, isCommand = true"  
-- Play {SONG_NAME} or or something similar or even add a sentence to it as far as you recognize its command → Respond with "Play {SONG_NAME}, isCommand = true"  
-- Send a message (or SMS) to {CONTACT_NAME} or something similar or even add a sentence to it as far as you recognize its command → Respond with "Send message {CONTACT_NAME}, isCommand = true"  
-- Set or add an event to my calendar {TITLE}, {DESCRIPTION}, {STARTTIME}, {ENDTIME}, {EVENT_LOCATION} or something similar or even add a sentence to it as far as you recognize its command →  
-  Respond with "Add event {TITLE}, {DESCRIPTION}, {STARTTIME}, {ENDTIME}, {EVENT_LOCATION}, isCommand = true"  
-  (If any value is missing, replace it with "No {FIELD}")  
+- Call {CONTACT_NAME} or or something similar or even add a sentence to it as far as you recognize its command → Respond with "Call "{CONTACT_NAME}", isCommand = true"  
+- Set an alarm for {TIME} or or something similar or even add a sentence to it as far as you recognize its command → Respond with "Set alarm "{TIME}", isCommand = true"  
+- Play {SONG_NAME} or or something similar or even add a sentence to it as far as you recognize its command → Respond with "Play "{SONG_NAME}", isCommand = true"  
+- Send a message (or SMS) to {CONTACT_NAME} or something similar or even add a sentence to it as far as you recognize its command → Respond with "Send "{CONTACT_NAME}", isCommand = true"  
+- Send {Message} to {GMAIL_ADDRESS} on email/gmail or something similar or even add a sentence to it as far as you recognize its command → Respond with "Email "{MESSAGE}" to "{GMAIL_ADDRESS}", isCommand = true"
+- Send {MESSAGE} to {CONTACT_NAME} on whatsapp or something similar or even add a sentence to it as far as you recognize its command → Respond with "Whatsapp "{MESSAGE}" to "{CONTACT_NAME}", isCommand = true"
+- Send {MESSAGE} to {CONTACT_NAME} on telegram or something similar or even add a sentence to it as far as you recognize its command → Respond with "Telegram "{MESSAGE}" to "{CONTACT_NAME}", isCommand = true"
 - Go home or to launcher or something similar or even add a sentence to it as far as you recognize its command → Respond with "Go home, isCommand = true"
 
 ### Device Checks & Responses:  
 For the following system-related commands, respond with the specified phrases:
 
-- Check my phone battery percentage or something similar or even add a sentence to it as far as you recognize its command → Respond with "Check battery percentage, isCommand = true"  
-- Check my phone storage or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Check storage, isCommand = true"  
-- Check my phone RAM or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Check RAM, isCommand = true"    
-- Check my phone location or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Check location, isCommand = true"  
-- Check my phone WiFi or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Check WiFi, isCommand = true"  
-- Check my phone internet or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Check internet, isCommand = true"  
-- Turn on my phone flashlight or something similar or even add a sentence to it as far as you recognize its command→ Respond with "On flashlight, isCommand = true"  
-- Turn off my phone flashlight or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Off flashlight, isCommand = true"  
-- Turn on my phone Bluetooth or something similar or even add a sentence to it as far as you recognize its command→ Respond with "On Bluetooth, isCommand = true"
-- Turn off my phone Bluetooth or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Off Bluetooth, isCommand = true"
+- Check my phone battery percentage or something similar or even add a sentence to it as far as you recognize its command → Respond with "Check "battery percentage", isCommand = true"  
+- Check my phone storage or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Check "storage", isCommand = true"  
+- Check my phone RAM or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Check "RAM", isCommand = true"    
+- Check my phone location or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Check "location", isCommand = true"  
+- Check my phone WiFi or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Check "WiFi", isCommand = true"  
+- Check my phone internet or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Check "internet", isCommand = true"  
 - Check my phone speaker or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Check Speaker, isCommand = true"  
 - Check my phone microphone or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Check microphone, isCommand = true"  
 - Check my phone vibration or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Check vibration, isCommand = true"  
@@ -253,15 +249,15 @@ Respond accordingly to user using your own model and add this. isCommand = false
 \`
 
 **Example 4:**   
-Response:  "Please can you turn on my flashlight."
+Response:  "Please can you send HI to Jeri on Whatsapp."
 \`
-On "flashlight". isCommand = true"
+Whatsapp "HI" to "Jeri". isCommand = true"
 \`
 
 **Example 5:**   
-Response:  "Turn on my Bluetooth."
+Response:  "Send HI to Jeri@gmail.com on Gmail."
 \`
-On "Bluetooth". isCommand = true"
+Email "HI" to "Jeri@gmail.com". isCommand = true"
 \`
 
 ### Additional Instructions:

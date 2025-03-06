@@ -1,5 +1,7 @@
 // Used by: api/nova/gpt/command/index.js
 
+const e = require("express");
+
 function getCommand(text) {
   return new Promise((resolve, reject) => {
     try {
@@ -10,11 +12,8 @@ function getCommand(text) {
       let contactName = null;
       let time = null;
       let songName = null;
-      let title = null;
-      let description = null;
-      let startTime = null;
-      let endTime = null;
-      let eventLocation = null;
+      let message = null;
+      let gmailAddress = null;
       let checkCommand = null;
 
       if (command.startsWith('open')) {
@@ -28,17 +27,20 @@ function getCommand(text) {
         songName = response.trim().split(/\s+/)[1]; 
       } else if (command.startsWith('send')) {
         contactName = response.trim().split(/\s+/)[1]; 
-      }else if (command.startsWith('add')) {
-        title = response.trim().split(/\s+/)[2]; 
-        description = response.trim().split(/\s+/)[3]; 
-        startTime = response.trim().split(/\s+/)[4]; 
-        endTime = response.trim().split(/\s+/)[5]; 
-        eventLocation = response.trim().split(/\s+/)[6]; 
+      }else if (command.startsWith('email')) {
+        message = extractQuotedText(response);
+        gmailAddress = extractSecondQuotedText(response);
+      }else if (command.startsWith('whatsapp')) {
+        message = extractQuotedText(response);
+        contactName = extractSecondQuotedText(response);
+      }else if (command.startsWith('telegram')) {
+        message = extractQuotedText(response);
+        contactName = extractSecondQuotedText(response);
       }else if (command.startsWith('check')) {
-        checkCommand = response.trim().split(/\s+/)[1]; 
+        checkCommand = extractQuotedText(response);
       }
 
-      resolve({ response: response, packageName: packageName, command: command, contactName: contactName, time: time, songName: songName, title: title, description: description, startTime: startTime, endTime: endTime, eventLocation: eventLocation, checkCommand: checkCommand });
+      resolve({ response: response, packageName: packageName, command: command, contactName: contactName, time: time, songName: songName, message: message, gmail: gmailAddress, checkCommand: checkCommand });
     } catch (error) {
       console.error(error);
       reject('Error processing the audio file.');
@@ -49,6 +51,12 @@ function getCommand(text) {
 function removeBackticks(input) {
   return input.replace(/`/g, ''); // Replace all backticks with an empty string
 }
+
+function extractSecondQuotedText(input) {
+  let match = input.match(/"([^"]+)"[^"]+"([^"]+)"/); // Match two quoted texts
+  return match ? match[2] : null; // Return the second matched text or null if not found
+}
+
 
 function extractQuotedText(input) {
   let match = input.match(/"([^"]+)"/); // Find the first occurrence inside quotes

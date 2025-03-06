@@ -22,6 +22,7 @@ function getCommand(text) {
         packageName = extractQuotedText(response);
       } else if (command.startsWith('call')) {
         contactName = extractQuotedText(response);
+        console.log('call command', contactName);
       } else if (command.startsWith('set')) {
         hour = extractQuotedText(response);
         minutes = extractSecondQuotedText(response);

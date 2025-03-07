@@ -34,10 +34,10 @@ const openai = new OpenAI({
 
 app.get("/get-speech", async (req, res) => {
     // Get the text from the request
-    const text = req.body.text;
+    const text = req.query.text;
 
     // Generate a TTS transcribe audio
-    const ttsBuffer = await getTTSStream(text.transcription);
+    const ttsBuffer = await getTTSStream(text);
 
     res.setHeader("Content-Type", "audio/mpeg");
     res.setHeader("Content-Length", ttsBuffer.length);

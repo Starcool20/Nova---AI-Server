@@ -14,7 +14,7 @@ const upload = multer({ dest: '/tmp' });
 app.use(express.json());
 
 // Enable CORS
-/*const allowCors = (fn) => async (req, res) => {
+const allowCors = (fn) => async (req, res) => {
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
@@ -27,7 +27,7 @@ app.use(express.json());
     return;
   }
   return await fn(req, res);
-};*/
+};
 
 const handler = (req, res) => {
   app(req, res);

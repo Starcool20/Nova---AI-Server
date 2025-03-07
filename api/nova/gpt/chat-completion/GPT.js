@@ -197,13 +197,13 @@ For the following user commands, respond with the specified format:
 
 - Open {APP_NAME} or something similar or even add a sentence to it as far as you recognize its command → Respond with "Open "{PACKAGE_NAME}", isCommand = true"  
   (This are my installed apps package name use it ${data_json.installed_apps}.if you cannot find the app name use the package name to guess it, if you cannot find the app package name if You cannot find the user requested app package name respond with "App not found isCommand = false")  
-- Call {CONTACT_NAME} or something similar or even add a sentence to it as far as you recognize its command → Respond with "Call "{CONTACT_NAME}", isCommand = true"  
+- Call {CONTACT_NAME} or to {PHONE_NUMBER} or something similar or even add a sentence to it as far as you recognize its command → Respond with "Call "{CONTACT_NAME}" or to {PHONE_NUMBER}, isCommand = true"  
 - Set an alarm for {TIME} hour {TIME} minutes or or something similar or even add a sentence to it as far as you recognize its command → Respond with "Set "{TIME}" hour "{TIME}" minutes, isCommand = true"  
 - Play {SONG_NAME} or something similar or even add a sentence to it as far as you recognize its command → Respond with "Play "{SONG_NAME}", isCommand = true"  
-- Send {MESSAGE} to {CONTACT_NAME} as a message or something similar or even add a sentence to it as far as you recognize its command → Respond with "Send "{MESSAGE}" to "{CONTACT_NAME}", isCommand = true"  
+- Send {MESSAGE} to {CONTACT_NAME} or to {PHONE_NUMBER} as a message or something similar or even add a sentence to it as far as you recognize its command → Respond with "Send "{MESSAGE}" to "{CONTACT_NAME}" or to "{PHONE_NUMBER}", isCommand = true"  
 - Send {MESSAGE} to {GMAIL_ADDRESS} on email/gmail or something similar or even add a sentence to it as far as you recognize its command → Respond with "Email "{MESSAGE}" to "{GMAIL_ADDRESS}", isCommand = true"
-- Send {MESSAGE} to {CONTACT_NAME} on whatsapp or something similar or even add a sentence to it as far as you recognize its command → Respond with "Whatsapp "{MESSAGE}" to "{CONTACT_NAME}", isCommand = true"
-- Send {MESSAGE} to {CONTACT_NAME} on telegram or something similar or even add a sentence to it as far as you recognize its command → Respond with "Telegram "{MESSAGE}" to "{CONTACT_NAME}", isCommand = true"
+- Send {MESSAGE} to {CONTACT_NAME} or to {PHONE_NUMBER} on whatsapp or something similar or even add a sentence to it as far as you recognize its command → Respond with "Whatsapp "{MESSAGE}" to "{CONTACT_NAME}" or to "{PHONE_NUMBER}", isCommand = true"
+- Send {MESSAGE} to {CONTACT_NAME} or to {PHONE_NUMBER} on telegram or something similar or even add a sentence to it as far as you recognize its command → Respond with "Telegram "{MESSAGE}" to "{CONTACT_NAME}" or to "{PHONE_NUMBER}", isCommand = true"
 - Go home or to launcher or something similar or even add a sentence to it as far as you recognize its command → Respond with "Go home, isCommand = true"
 
 ### Device Checks & Responses:  
@@ -306,6 +306,24 @@ Telegram "HI" to "Jeri". isCommand = true"
 Response:  "Call Jeri."
 \`
 Call "Jeri". isCommand = true"
+\`
+
+**Example 14:**   
+Response:  "Send HI to +234000000000 on Whtasapp."
+\`
+Whatsapp "HI" to "+234000000000". isCommand = true"
+\`
+
+**Example 15:**   
+Response:  "Send HI to +234000000000 on Telegram."
+\`
+Telegram "HI" to "+234000000000". isCommand = true"
+\`
+
+**Example 16:**   
+Response:  "Call +234000000000."
+\`
+Call "+234000000000". isCommand = true"
 \`
 
 ### Additional Instructions:

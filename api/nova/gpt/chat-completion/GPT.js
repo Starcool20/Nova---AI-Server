@@ -200,7 +200,7 @@ For the following user commands, respond with the specified format:
 - Call {CONTACT_NAME} or or something similar or even add a sentence to it as far as you recognize its command → Respond with "Call "{CONTACT_NAME}", isCommand = true"  
 - Set an alarm for {TIME} hour {TIME} minutes or or something similar or even add a sentence to it as far as you recognize its command → Respond with "Set "{TIME}" hour "{TIME}" minutes, isCommand = true"  
 - Play {SONG_NAME} or something similar or even add a sentence to it as far as you recognize its command → Respond with "Play "{SONG_NAME}", isCommand = true"  
-- Send {MESSAGE} to {CONTACT_NAME} or something similar or even add a sentence to it as far as you recognize its command → Respond with "Send "{MESSAGE}" to "{CONTACT_NAME}", isCommand = true"  
+- Send {MESSAGE} to {CONTACT_NAME} as a message or something similar or even add a sentence to it as far as you recognize its command → Respond with "Send "{MESSAGE}" to "{CONTACT_NAME}", isCommand = true"  
 - Send {MESSAGE} to {GMAIL_ADDRESS} on email/gmail or something similar or even add a sentence to it as far as you recognize its command → Respond with "Email "{MESSAGE}" to "{GMAIL_ADDRESS}", isCommand = true"
 - Send {MESSAGE} to {CONTACT_NAME} on whatsapp or something similar or even add a sentence to it as far as you recognize its command → Respond with "Whatsapp "{MESSAGE}" to "{CONTACT_NAME}", isCommand = true"
 - Send {MESSAGE} to {CONTACT_NAME} on telegram or something similar or even add a sentence to it as far as you recognize its command → Respond with "Telegram "{MESSAGE}" to "{CONTACT_NAME}", isCommand = true"

@@ -17,6 +17,7 @@ function getCommand(text) {
       let message = null;
       let gmailAddress = null;
       let checkCommand = null;
+      let isNumericValue = null;
 
       if (command.includes('open')) {
       console.log('open command');
@@ -24,6 +25,9 @@ function getCommand(text) {
       } else if (command.includes('call')) {
         contactName = extractQuotedText(response);
         console.log('call command', contactName);
+        if (isNumeric(contactName)) {
+          isNumericValue = true;
+        }
       } else if (command.includes('set')) {
         hour = extractQuotedText(response);
         console.log('set command', hour);
@@ -35,20 +39,29 @@ function getCommand(text) {
         console.log('send command');
         message = extractQuotedText(response);
         contactName = extractSecondQuotedText(response);
+        if (isNumeric(contactName)) {
+          isNumericValue = true;
+        }
       }else if (command.includes('email')) {
         message = extractQuotedText(response);
         gmailAddress = extractSecondQuotedText(response);
       }else if (command.includes('whatsapp')) {
         message = extractQuotedText(response);
         contactName = extractSecondQuotedText(response);
+        if (isNumeric(contactName)) {
+          isNumericValue = true;
+        }
       }else if (command.includes('telegram')) {
         message = extractQuotedText(response);
         contactName = extractSecondQuotedText(response);
+        if (isNumeric(contactName)) {
+          isNumericValue = true;
+        }
       }else if (command.includes('check')) {
         checkCommand = extractQuotedText(response);
       }
 
-      resolve({ response: response, packageName: packageName, command: command, contactName: contactName, hour: hour, minutes: minutes, songName: songName, message: message, gmail: gmailAddress, checkCommand: checkCommand });
+      resolve({ response: response, packageName: packageName, command: command, contactName: contactName, hour: hour, minutes: minutes, songName: songName, message: message, gmail: gmailAddress, checkCommand: checkCommand, isNumericValue: isNumericValue });
     } catch (error) {
       console.error(error);
       reject('Error processing the audio file.');
@@ -74,6 +87,10 @@ function extractQuotedText(input) {
 function getIsCommand(text) {
     const match = text.match(/isCommand\s*=\s*(true|false)/i);
     return match ? match[1] === "true" : null;
+}
+
+function isNumeric(value) {
+  return !isNaN(Number(value)) && typeof value !== 'boolean';
 }
 
 module.exports = {

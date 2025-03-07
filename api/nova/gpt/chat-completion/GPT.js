@@ -323,7 +323,13 @@ Telegram "HI" to "+234000000000". isCommand = true"
 **Example 16:**   
 Response:  "Call +234000000000."
 \`
-Call "+234000000000". isCommand = true"
+Call "234000000000". isCommand = true"
+\`
+
+**Example 17:**   
+Response:  "Call 234000000000."
+\`
+Call "234000000000". isCommand = true"
 \`
 
 ### Additional Instructions:

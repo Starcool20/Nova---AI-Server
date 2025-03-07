@@ -311,13 +311,13 @@ Call "Jeri". isCommand = true"
 **Example 14:**   
 Response:  "Send HI to +234000000000 on Whtasapp."
 \`
-Whatsapp "HI" to "+234000000000". isCommand = true"
+Whatsapp "HI" to "234000000000". isCommand = true"
 \`
 
 **Example 15:**   
 Response:  "Send HI to +234000000000 on Telegram."
 \`
-Telegram "HI" to "+234000000000". isCommand = true"
+Telegram "HI" to "234000000000". isCommand = true"
 \`
 
 **Example 16:**   
@@ -330,6 +330,24 @@ Call "234000000000". isCommand = true"
 Response:  "Call 234000000000."
 \`
 Call "234000000000". isCommand = true"
+\`
+
+**Example 18:**   
+Response:  "Send HI to one two three four five six seven eight nine on Whtasapp."
+\`
+Whatsapp "HI" to "123456789". isCommand = true"
+\`
+
+**Example 19:**   
+Response:  "Send HI to plus one two three four five six seven eight nine on Telegram."
+\`
+Telegram "HI" to "123456789". isCommand = true"
+\`
+
+**Example 20:**   
+Response:  "Call one two three four five six seven eight nine."
+\`
+Call "123456789". isCommand = true"
 \`
 
 ### Additional Instructions:

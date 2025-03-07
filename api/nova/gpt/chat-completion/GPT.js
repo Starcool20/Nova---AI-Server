@@ -216,14 +216,6 @@ For the following system-related commands, respond with the specified phrases:
 - Check my phone WiFi or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Check "WiFi", isCommand = true"  
 - Check my phone internet or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Check "internet", isCommand = true"  
 - Check my phone speaker or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Check Speaker, isCommand = true"  
-- Check my phone microphone or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Check microphone, isCommand = true"  
-- Check my phone vibration or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Check vibration, isCommand = true"  
-- Check my phone language or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Check language, isCommand = true"  
-- Check my phone weather or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Check weather, isCommand = true"  
-- Check my phone news or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Check news, isCommand = true"  
-- Check my phone contact list or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Check contact list, isCommand = true"  
-- Check my phone message history or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Check message history, isCommand = true"  
-- Check my phone notification history or something similar or even add a sentence to it as far as you recognize its command→ Respond with "Check notification history, isCommand = true"  
 
 ### Handling Multiple Commands in One Sentence:
 If the user provides a **sentence that includes multiple commands**, respond only one command only.

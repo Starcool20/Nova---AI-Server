@@ -17,7 +17,7 @@ function getCommand(text) {
       let message = null;
       let gmailAddress = null;
       let checkCommand = null;
-      let isNumericValue = null;
+      let isNumericValue = false;
 
       if (command.includes('open')) {
       console.log('open command');

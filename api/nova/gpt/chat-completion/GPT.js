@@ -315,7 +315,7 @@ Telegram "HI" to "234000000000". isCommand = true"
 **Example 16:**   
 Response:  "Call +234-000-000-000-0."
 \`
-Call "234000000000". isCommand = true"
+Call "234000000000" do not use the - on its response. isCommand = true"
 \`
 
 **Example 17:**   

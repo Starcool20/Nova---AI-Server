@@ -12,7 +12,7 @@
   },
   "routes": [
     { "src": "/prompt-nova", "dest": "/api/index.js" },
-    { "src": "/transcribe", "dest": "/api/get-speech.js" },
+    { "src": "/get-speech", "dest": "/api/transcribe.js" },
     { "src": "/favicon.ico", "dest": "/api/icon/icon.png" },
     { "src": "/", "dest": "/api/icon/icon.png" }
   ]

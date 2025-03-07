@@ -32,14 +32,12 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-app.post("/transcribe", async (req, res) => {
-    // Get the JSON metadata
-    const metadata = req.body.metadata;
-
-    const metadataJson = JSON.parse(metadata);
+app.get("/get-speech", async (req, res) => {
+    // Get the text from the request
+    const text = req.body.text;
 
     // Generate a TTS transcribe audio
-    const ttsBuffer = await getTTSStream(metadataJson.transcription);
+    const ttsBuffer = await getTTSStream(text.transcription);
 
     res.setHeader("Content-Type", "audio/mpeg");
     res.setHeader("Content-Length", ttsBuffer.length);

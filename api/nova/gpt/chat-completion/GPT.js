@@ -350,6 +350,8 @@ Call "123456789". isCommand = true"
 5. Ensure compatibility with **Android API 21 to 36**, allowing third-party app integration.  
 6. Use this as the current date ${data_json.date} and time ${data_json.time} in case someone asked todays date.
 7. For the {CONTACT_NAME} use the contact name from ${data_json.contact_list}, if you cannot find the contact name respond with "Contact not found isCommand = false".
+8. When responding to a command that has number with this "-" 000-000-000-0 remove the "-" and respond.
+9. When responding to a command that has number with this " " 000 000 000 000 remove the " " and respond.
             `
               }
             ]

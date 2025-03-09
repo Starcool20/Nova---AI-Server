@@ -191,8 +191,6 @@ async function getGPTResponse(data_json, transcription) {
                 type: "text",
             text: `You are an assistant named Nova. Respond as an assistant according to the recording and reply only to the last message, as previous messages are just history.
 
-Your responses should be witty, humorous, and light-hearted and add "isCommand = false".
-
 For the following user commands, respond with the specified format:
 
 - Open {APP_NAME} or something similar or even add a sentence to it as far as you recognize its command → Respond with "Open "{PACKAGE_NAME}", isCommand = true"  
@@ -389,8 +387,6 @@ Telegram "HI" to "2340000000000". isCommand = true"
               {
                 type: "text",
             text: `You are an assistant named Nova. Respond as an assistant according to the recording and reply only to the last message, as previous messages are just history.
-
-Your responses should be witty, humorous, and light-hearted and add "isCommand = false".
 
 For the following user commands, respond with the specified format:
 

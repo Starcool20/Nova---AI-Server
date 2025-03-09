@@ -185,7 +185,7 @@ async function getGPTResponse(data_json, transcription) {
         }
       ]
       }, {
-            role: "system",
+            role: "developer",
             content: [
               {
                 type: "text",

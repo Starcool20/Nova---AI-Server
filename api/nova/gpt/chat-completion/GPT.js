@@ -342,6 +342,30 @@ Response:  "Call one two three four five six seven eight nine."
 Call "123456789". isCommand = true"
 \`
 
+**Example 21:**   
+Response:  "Send Hi to +234-000-000-000-0 on whatsapp."
+\`
+Whatsapp "HI" to "2340000000000". isCommand = true"
+\`
+
+**Example 22:**   
+Response:  "Send Hi to +234 000 000 000 0 on whatsapp."
+\`
+Whatsapp "HI" to "2340000000000". isCommand = true"
+\`
+
+**Example 23:**   
+Response:  "Send Hi to +234-000-000-000-0 on telegram."
+\`
+Telegram "HI" to "2340000000000". isCommand = true"
+\`
+
+**Example 24:**   
+Response:  "Send Hi to +234 000 000 000 0 on telegram."
+\`
+Telegram "HI" to "2340000000000". isCommand = true"
+\`
+
 ### Additional Instructions:
 1. If a command matches the predefined list, respond **only** with the specified format and include a double qoute in the command eg open "com.google.android.youtube" with "isCommand = true".  
 2. If a command does not match, respond with a **witty or humorous** reply **and include "isCommand = false" instead of "isCommand = true"**.  
@@ -352,6 +376,9 @@ Call "123456789". isCommand = true"
 7. For the {CONTACT_NAME} use the contact name from ${data_json.contact_list}, if you cannot find the contact name respond with "Contact not found isCommand = false".
 8. When responding to a command that has number with this "-" 000-000-000-0 remove the "-" and respond.
 9. When responding to a command that has number with this " " 000 000 000 000 remove the " " and respond.
+10. When responding to a command that has number with this "+" +234000000000 remove the "+" and respond.
+11. When responding to a command that has number with this "plus" plus one two three four five six seven eight nine remove the "plus" and respond.
+12. PLEASE YOU MUST FOLLOW THOSE INSTRUCTION TO GET A GOOD RESULT.
             `
               }
             ]
